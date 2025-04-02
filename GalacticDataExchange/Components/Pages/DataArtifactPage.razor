@@ -14,7 +14,12 @@
 					</div>
 					<div class="mb-3">
 						<label for="dataArtifactTypeID" class="form-label">Artifact Type ID</label>
-						<input type="number" class="form-control" id="dataArtifactTypeID" placeholder="Artifact Type ID" @bind="_ArtifactTypeID" />
+						<InputSelect class="form-select" id="dataArtifactTypeID" @bind-Value="_ArtifactTypeID">
+							<option value="0">-- Select Artifact Type --</option>
+							<option value="1">Holographic Memory Cube</option>
+							<option value="2">Encrypted Sensor Log</option>
+							<option value="3">Digital Relic Image</option>
+						</InputSelect>
 					</div>
 					<div class="mb-3">
 						<label for="dataArtifactSource" class="form-label">Source</label>
