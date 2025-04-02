@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange
 {
-    internal class DataArtifactInputModel
+    public class DataArtifactInputModel
     {
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = String.Empty;
@@ -25,7 +25,7 @@ namespace GalacticDataExchange
         public string Source { get; set; } = String.Empty;
 
         [Required(ErrorMessage = "Data Artifact Type ID is required")]
-        [Range(1, int.MaxValue)]
+        [Range(1, 3)]
         public int DataArtifactTypeID { get; set; } = 0;
 
         

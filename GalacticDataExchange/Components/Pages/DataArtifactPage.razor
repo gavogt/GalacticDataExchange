@@ -6,13 +6,14 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card shadow-sm">
-					<div class="card-header">
-						<h5 class="card-title">Data Artifact Page</h5>
+					<div class="card-header bg-primary text-dark mb-0">
+						<h5 class="card-title justify-content-center">Data Artifact Page</h5>
 					</div>
 					<div class="card-body">
 						<div class="mb-3">
 							<label for="dataArtifactName" class="form-label">Name</label>
 							<input type="text" class="form-control" id="dataArtifactName" placeholder="Name" @bind="_DataArtifactInputModel.Name" />
+							<ValidationMessage For="@(() => _DataArtifactInputModel.Name)" />
 						</div>
 						<div class="mb-3">
 							<label for="dataArtifactTypeID" class="form-label">Artifact Type ID</label>
@@ -22,25 +23,30 @@
 								<option value="2">Encrypted Sensor Log</option>
 								<option value="3">Digital Relic Image</option>
 							</InputSelect>
+							<ValidationMessage For="@(() => _DataArtifactInputModel.DataArtifactTypeID)" />
 						</div>
 						<div class="mb-3">
 							<label for="dataArtifactImageURL" class="form-label">Image URL</label>
 							<input type="text" class="form-control" id="dataArtifactImageURL" placeholder="Image URL" @bind="_DataArtifactInputModel.ImageURL" />
+							<ValidationMessage For="@(() => _DataArtifactInputModel.ImageURL)" />
 						</div>
 						<div class="mb-3">
 							<label for="dataArtifactRawAlienText" class="form-label">Raw Alien Text</label>
 							<textarea class="form-control" id="dataArtifactRawAlienText" rows="3" @bind="_DataArtifactInputModel.RawAlienText"></textarea>
+							<ValidationMessage For="@(() => _DataArtifactInputModel.RawAlienText)" />
 						</div>
 						<div class="mb-3">
 							<label for="dataArtifactSource" class="form-label">Source</label>
 							<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_DataArtifactInputModel.Source" />
+							<ValidationMessage For="@(() => _DataArtifactInputModel.Source)" />
 						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary align-items-end">Submit</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<ValidationSummary />
 </EditForm> 
 @code {
 
