@@ -15,17 +15,29 @@ namespace GalacticDataExchange
         // Common Properties
         private string _Name { get; init; }
 
-        private string _ArtifactType { get; init; }
-
         private string _ImageURL { get; init; }
 
         private string _RawAlienText { get; init; }
 
         private string _TranslatedText { get; set; }
 
-        private DateTime _TimeStamp { get; init; }
+        private DateTime _TimeStamp { get; init; } = DateTime.Now;
 
-        private string _SourceLanguage { get; init; }
+        private string _Source { get; init; }
+
+        // Foreign Key
+        private int _DataArtifactTypeID { get; init; }
+
+        public DataArtifact(string name, int dataArtifactTypeID, string imageURL, string rawAlienText, string translatedText, string source)
+        {
+            _Name = name;
+            _DataArtifactTypeID = dataArtifactTypeID;
+            _ImageURL = imageURL;
+            _RawAlienText = rawAlienText;
+            _TranslatedText = translatedText;
+            _Source = source;
+
+        }
 
     }
 }
