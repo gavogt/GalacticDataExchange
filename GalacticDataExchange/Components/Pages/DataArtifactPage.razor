@@ -1,39 +1,62 @@
 ﻿@page "/dataArtifactPage"
 
-<div class="container my-5">
-	<div class="row">
-		<div class="col-12">
-			<div class="card shadow-sm">
-				<div class="card-header">
-					<h5 class="card-title">Data Artifact Page</h5>
-				</div>
-				<div class="card-body">
-					<div class="mb-3">
-						<label for="dataArtifactName" class="form-label">Name</label>
-						<input type="text" class="form-control" id="dataArtifactName" placeholder="Name" @bind="_Name" />
+<EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">
+	<DataAnnotationsValidator />
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-12">
+				<div class="card shadow-sm">
+					<div class="card-header">
+						<h5 class="card-title">Data Artifact Page</h5>
 					</div>
-					<div class="mb-3">
-						<label for="dataArtifactTypeID" class="form-label">Artifact Type ID</label>
-						<InputSelect class="form-select" id="dataArtifactTypeID" @bind-Value="_ArtifactTypeID">
-							<option value="0">-- Select Artifact Type --</option>
-							<option value="1">Holographic Memory Cube</option>
-							<option value="2">Encrypted Sensor Log</option>
-							<option value="3">Digital Relic Image</option>
-						</InputSelect>
-					</div>
-					<div class="mb-3">
-						<label for="dataArtifactSource" class="form-label">Source</label>
-						<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_Source" />
+					<div class="card-body">
+						<div class="mb-3">
+							<label for="dataArtifactName" class="form-label">Name</label>
+							<input type="text" class="form-control" id="dataArtifactName" placeholder="Name" @bind="_DataArtifactInputModel.Name" />
+						</div>
+						<div class="mb-3">
+							<label for="dataArtifactTypeID" class="form-label">Artifact Type ID</label>
+							<InputSelect class="form-select" id="dataArtifactTypeID" @bind-Value="_DataArtifactInputModel.DataArtifactTypeID">
+								<option value="0">-- Select Artifact Type --</option>
+								<option value="1">Holographic Memory Cube</option>
+								<option value="2">Encrypted Sensor Log</option>
+								<option value="3">Digital Relic Image</option>
+							</InputSelect>
+						</div>
+						<div class="mb-3">
+							<label for="dataArtifactImageURL" class="form-label">Image URL</label>
+							<input type="text" class="form-control" id="dataArtifactImageURL" placeholder="Image URL" @bind="_DataArtifactInputModel.ImageURL" />
+						</div>
+						<div class="mb-3">
+							<label for="dataArtifactRawAlienText" class="form-label">Raw Alien Text</label>
+							<textarea class="form-control" id="dataArtifactRawAlienText" rows="3" @bind="_DataArtifactInputModel.RawAlienText"></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="dataArtifactSource" class="form-label">Source</label>
+							<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_DataArtifactInputModel.Source" />
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
+</EditForm> 
 @code {
-	private string _Name { get; set; } = String.Empty;
-	private int _ArtifactTypeID { get; set; } = 0;
-	private string _Source { get; set; } = String.Empty;
+
+	private DataArtifact _DataArtifact { get; set; } = new DataArtifact();
+	private DataArtifactInputModel _DataArtifactInputModel { get; set; } = new DataArtifactInputModel();
+
+	protected async Task SubmitDataArtifact()
+	{
+		_DataArtifact = new DataArtifact(_DataArtifactInputModel.Name, _DataArtifactInputModel.DataArtifactTypeID, _DataArtifactInputModel.ImageURL, _DataArtifactInputModel.RawAlienText, _DataArtifactInputModel.TranslatedText, _DataArtifactInputModel.Source);
+
+		if (_DataArtifact != null)
+		{
+			//await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
+			return;
+		}
+
+	}
 
 }

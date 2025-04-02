@@ -28,6 +28,14 @@ namespace GalacticDataExchange
         // Foreign Key
         private int _DataArtifactTypeID { get; init; }
 
+        // Ef Navigation
+        DataArtifactType? DataArtifactType { get; set; }
+
+        public DataArtifact()
+        {
+            
+        }
+
         public DataArtifact(string name, int dataArtifactTypeID, string imageURL, string rawAlienText, string translatedText, string source)
         {
             _Name = name;

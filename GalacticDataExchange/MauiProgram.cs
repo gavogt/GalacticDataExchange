@@ -103,9 +103,11 @@ namespace GalacticDataExchange
 
             builder.Services.AddMauiBlazorWebView();
 
+            builder.Services.AddScoped<DataArtifactDatabaseService>();
+
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

@@ -15,11 +15,17 @@ namespace GalacticDataExchange
             _context = context;
         }
 
-        public async Task<DataArtifact> InsertDataAsync(DataArtifact dataArtifact)
+        public async Task InsertDataArtifactAsync(DataArtifact dataArtifact)
         {
-            _context.DataArtifacts.Add(dataArtifact);
-            await _context.SaveChangesAsync();
-            return dataArtifact;
+            try
+            {
+                _context.DataArtifacts.Add(dataArtifact);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error inserting data artifact", ex);
+            }
         }
     }
 }
