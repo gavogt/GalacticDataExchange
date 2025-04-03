@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250403010208_DataArtifact")]
-    partial class DataArtifact
+    [Migration("20250403184017_EncryptionHelper")]
+    partial class EncryptionHelper
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,10 @@ namespace GalacticDataExchange.Migrations
 
                     b.Property<int>("DataArtifactTypeID")
                         .HasColumnType("int");
+
+                    b.Property<string>("EncryptionKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()

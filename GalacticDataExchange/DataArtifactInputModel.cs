@@ -26,6 +26,10 @@ namespace GalacticDataExchange
         [Range(1, 3)]
         public int DataArtifactTypeID { get; set; } = 0;
 
-        
+        public DateTime TimeStamp { get; set; } = DateTime.Now;
+
+        public string EncryptionKey { get; set; } = String.Empty;
+
+
     }
 }

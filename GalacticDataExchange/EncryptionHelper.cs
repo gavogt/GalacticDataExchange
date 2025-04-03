@@ -34,5 +34,13 @@ namespace GalacticDataExchange
             return Convert.ToHexStringLower(hashBytes);
 
         }
+
+        public static DataArtifactInputModel EncryptionKeyToDataArtifact(DataArtifactInputModel dataArtifactInputModel)
+        {
+            string dataToHash = $"{dataArtifactInputModel.Name}-{dataArtifactInputModel.TimeStamp}";
+            dataArtifactInputModel.EncryptionKey = ComputeSHA256Hash(dataToHash);
+            return dataArtifactInputModel;
+        }
+
     }
 }

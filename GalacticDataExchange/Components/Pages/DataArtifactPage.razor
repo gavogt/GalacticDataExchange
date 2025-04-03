@@ -123,14 +123,20 @@
 		_DataArtifactInputModel.RawAlienText = AlienLanguageConverter.Encode(_rawText);
 		_DataArtifactInputModel.TranslatedText = AlienLanguageConverter.Decode(_rawText);
 
+		// Encrypt the DataArtifactInputModel EncryptionKey using the EncryptionHelper
+		_DataArtifactInputModel = EncryptionHelper.EncryptionKeyToDataArtifact(_DataArtifactInputModel);
+
 		// Create a new DataArtifact instance using the input model
 		_DataArtifact = new DataArtifact(
-			_DataArtifactInputModel.Name, 
-			_DataArtifactInputModel.DataArtifactTypeID, 
-			_DataArtifactInputModel.ImageURL, 
-			_DataArtifactInputModel.RawAlienText, 
-			_DataArtifactInputModel.TranslatedText, 
-			_DataArtifactInputModel.Source);
+			_DataArtifactInputModel.Name,
+			_DataArtifactInputModel.DataArtifactTypeID,
+			_DataArtifactInputModel.ImageURL,
+			_DataArtifactInputModel.RawAlienText,
+			_DataArtifactInputModel.TranslatedText,
+			_DataArtifactInputModel.Source,
+			_DataArtifactInputModel.EncryptionKey,
+			_DataArtifactInputModel.TimeStamp
+	);
 
 		// Check if the DataArtifact is not null before inserting
 		if (_DataArtifact != null)

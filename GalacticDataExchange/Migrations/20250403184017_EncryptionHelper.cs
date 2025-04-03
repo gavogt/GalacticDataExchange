@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class DataArtifact : Migration
+    public partial class EncryptionHelper : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,7 @@ namespace GalacticDataExchange.Migrations
                     TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EncryptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataArtifactTypeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

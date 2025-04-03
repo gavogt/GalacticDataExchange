@@ -31,6 +31,10 @@ namespace GalacticDataExchange.Migrations
                     b.Property<int>("DataArtifactTypeID")
                         .HasColumnType("int");
 
+                    b.Property<string>("EncryptionKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

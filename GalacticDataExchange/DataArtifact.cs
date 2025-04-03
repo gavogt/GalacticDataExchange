@@ -23,9 +23,11 @@ namespace GalacticDataExchange
 
         public string TranslatedText { get; set; }
 
-        public DateTime TimeStamp { get; init; } = DateTime.Now;
+        public DateTime TimeStamp { get; init; }
 
         public string Source { get; init; }
+
+        public string EncryptionKey { get; init; }
 
         // Foreign Key
         public int DataArtifactTypeID { get; init; }
@@ -38,7 +40,7 @@ namespace GalacticDataExchange
             
         }
 
-        public DataArtifact(string name, int dataArtifactTypeID, string imageURL, string rawAlienText, string translatedText, string source)
+        public DataArtifact(string name, int dataArtifactTypeID, string imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp)
         {
             Name = name;
             DataArtifactTypeID = dataArtifactTypeID;
@@ -46,6 +48,8 @@ namespace GalacticDataExchange
             RawAlienText = rawAlienText;
             TranslatedText = translatedText;
             Source = source;
+            EncryptionKey = encryptionKey;
+            TimeStamp = timestamp;
 
         }
 
