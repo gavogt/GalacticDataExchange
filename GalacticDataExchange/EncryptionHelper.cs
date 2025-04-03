@@ -31,7 +31,7 @@ namespace GalacticDataExchange
             byte[] hashBytes = sha256.ComputeHash(inputBytes);
 
             // Convert the hash byte array to a hexadecimal string
-            return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+            return Convert.ToHexStringLower(hashBytes);
 
         }
     }
