@@ -15,10 +15,8 @@ namespace GalacticDataExchange
         [Required(ErrorMessage = "Image URL is required")]
         public string ImageURL { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "Raw Alien Text is required")]
         public string RawAlienText { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "Translated Text is required")]
         public string TranslatedText { get; set; } = String.Empty;
 
         [Required(ErrorMessage = "Source is required")]

@@ -33,13 +33,9 @@
 							<ValidationMessage For="@(() => _DataArtifactInputModel.ImageURL)" />
 						</div>
 						<div class="mb-3">
-							<label for="dataArtifactRawAlienText" class="form-label">Raw Alien Text</label>
-							<textarea class="form-control" id="dataArtifactRawAlienText" rows="3" @bind="_DataArtifactInputModel.RawAlienText"></textarea>
-							<ValidationMessage For="@(() => _DataArtifactInputModel.RawAlienText)" />
-						</div>
-						<div class="mb-3">
-							<label for="dataArtifactTranslatedText" class="form-label">Translated Text</label>
-							<textarea class="form-control" id="dataArtifactTranslatedText" rows="3" @bind="_DataArtifactInputModel.TranslatedText"></textarea>
+							<label for="dataArtifactRawAlienText" class="form-label">Raw Artifact Text</label>
+							<textarea class="form-control" id="dataArtifactRawAlienText" rows="3" @bind="_rawText"></textarea>
+							<ValidationMessage For="@(() => _rawText)" />
 						</div>
 						<div class="mb-3">
 							<label for="dataArtifactSource" class="form-label">Source</label>
@@ -48,19 +44,41 @@
 						</div>
 						<button type="submit" class="btn btn-primary align-items-end">Submit</button>
 					</div>
+					@if (_DataArtifactInputModel.RawAlienText != null)
+					{
+						<div class="mb-3">
+							<p>
+								<strong>Alien Text:</strong> @_DataArtifactInputModel.RawAlienText
+							</p>
+						</div>
+
+					}
+
+					@if (_DataArtifactInputModel.TranslatedText != null)
+					{
+						<div class="mb-3">
+							<p>
+								<strong>Decoded Alien Text:</strong> @_DataArtifactInputModel.TranslatedText
+							</p>
+						</div>
+					}
 				</div>
 			</div>
 		</div>
 	</div>
 	<ValidationSummary />
-</EditForm> 
+</EditForm>
 @code {
 
 	private DataArtifact _DataArtifact { get; set; } = new DataArtifact();
 	private DataArtifactInputModel _DataArtifactInputModel { get; set; } = new DataArtifactInputModel();
+	private string _rawText = string.Empty;
 
 	protected async Task SubmitDataArtifact()
 	{
+		_DataArtifactInputModel.RawAlienText = AlienLanguageConverter.Encode(_rawText);
+		_DataArtifactInputModel.TranslatedText = AlienLanguageConverter.Decode(_rawText);
+
 		_DataArtifact = new DataArtifact(_DataArtifactInputModel.Name, _DataArtifactInputModel.DataArtifactTypeID, _DataArtifactInputModel.ImageURL, _DataArtifactInputModel.RawAlienText, _DataArtifactInputModel.TranslatedText, _DataArtifactInputModel.Source);
 
 		if (_DataArtifact != null)
