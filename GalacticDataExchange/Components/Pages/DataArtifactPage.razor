@@ -1,5 +1,7 @@
 ﻿@page "/dataArtifactPage"
 
+@inject DataArtifactDatabaseService DataArtifactDatabaseService
+
 <EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">
 	<DataAnnotationsValidator />
 	<div class="container my-5">
@@ -36,6 +38,10 @@
 							<ValidationMessage For="@(() => _DataArtifactInputModel.RawAlienText)" />
 						</div>
 						<div class="mb-3">
+							<label for="dataArtifactTranslatedText" class="form-label">Translated Text</label>
+							<textarea class="form-control" id="dataArtifactTranslatedText" rows="3" @bind="_DataArtifactInputModel.TranslatedText"></textarea>
+						</div>
+						<div class="mb-3">
 							<label for="dataArtifactSource" class="form-label">Source</label>
 							<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_DataArtifactInputModel.Source" />
 							<ValidationMessage For="@(() => _DataArtifactInputModel.Source)" />
@@ -59,7 +65,7 @@
 
 		if (_DataArtifact != null)
 		{
-			//await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
+			await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
 			return;
 		}
 

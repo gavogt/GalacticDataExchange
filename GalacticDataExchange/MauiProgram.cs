@@ -106,7 +106,10 @@ namespace GalacticDataExchange
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            var configuration = builder.Configuration;
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true)
+                .Build();
 
             builder.Services.AddDbContext<DataDBContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("AlienConnection")));

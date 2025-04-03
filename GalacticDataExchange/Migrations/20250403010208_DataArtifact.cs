@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GalacticDataExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class DataArtifactTwo : Migration
+    public partial class DataArtifact : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,6 +49,16 @@ namespace GalacticDataExchange.Migrations
                         principalTable: "DataArtifactTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "DataArtifactTypes",
+                columns: new[] { "ID", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "A cube that stores data in a holographic matrix.", "Holographic Memory Cube" },
+                    { 2, "A sensor log that has been encrypted.", "Encrypted Sensor Log" },
+                    { 3, "An image of a relic that has been digitized.", "Digital Relic Image" }
                 });
 
             migrationBuilder.CreateIndex(

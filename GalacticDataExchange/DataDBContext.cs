@@ -25,6 +25,15 @@ namespace GalacticDataExchange
                 .WithMany()
                 .HasForeignKey(d => d.DataArtifactTypeID);
 
+            modelBuilder.Entity<DataArtifactType>()
+                .Property(dat => dat.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<DataArtifactType>().HasData(
+                new DataArtifactType { ID = 1, Name = "Holographic Memory Cube", Description = "A cube that stores data in a holographic matrix." },
+                new DataArtifactType { ID = 2, Name = "Encrypted Sensor Log", Description = "A sensor log that has been encrypted." },
+                new DataArtifactType { ID = 3, Name = "Digital Relic Image", Description = "An image of a relic that has been digitized." });
+
             base.OnModelCreating(modelBuilder);
         }
 

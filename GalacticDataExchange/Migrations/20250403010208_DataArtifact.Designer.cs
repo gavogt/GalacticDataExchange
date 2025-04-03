@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250403002901_DataArtifactTwo")]
-    partial class DataArtifactTwo
+    [Migration("20250403010208_DataArtifact")]
+    partial class DataArtifact
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,26 @@ namespace GalacticDataExchange.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("DataArtifactTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Description = "A cube that stores data in a holographic matrix.",
+                            Name = "Holographic Memory Cube"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "A sensor log that has been encrypted.",
+                            Name = "Encrypted Sensor Log"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Description = "An image of a relic that has been digitized.",
+                            Name = "Digital Relic Image"
+                        });
                 });
 
             modelBuilder.Entity("GalacticDataExchange.DataArtifact", b =>
