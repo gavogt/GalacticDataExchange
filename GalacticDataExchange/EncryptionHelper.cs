@@ -35,12 +35,22 @@ namespace GalacticDataExchange
 
         }
 
+        /// <summary>
+        /// Generates an encryption key for the DataArtifactInputModel based on its name and timestamp.
+        /// </summary>
+        /// <param name="dataArtifactInputModel">The InputModel that requires an EncryptionKey</param>
+        /// <returns>The InputModel</returns>
         public static DataArtifactInputModel EncryptionKeyToDataArtifact(DataArtifactInputModel dataArtifactInputModel)
         {
+            // Assign string to be hashed
             string dataToHash = $"{dataArtifactInputModel.Name}-{dataArtifactInputModel.TimeStamp}";
-            dataArtifactInputModel.EncryptionKey = ComputeSHA256Hash(dataToHash);
-            return dataArtifactInputModel;
-        }
 
+            // Compute the SHA256 hash of the string
+            dataArtifactInputModel.EncryptionKey = ComputeSHA256Hash(dataToHash);
+
+            // Return the DataArtifactInputModel with the generated EncryptionKey
+            return dataArtifactInputModel;
+
+        }
     }
 }
