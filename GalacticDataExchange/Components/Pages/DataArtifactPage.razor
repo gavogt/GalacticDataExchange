@@ -6,17 +6,51 @@
 	<DataAnnotationsValidator />
 	<div class="container my-5">
 		<div class="row">
-			<div class="col-12">
+			<div class="col-4">
+				<div class="card shadow-sm">
+					<div class="card-header bg-primary text-dark mb-0">
+						<h5 class="card-title justify-content-center">Upload Artifact</h5>
+					</div>
+					<div class="card-body">
+
+						<!-- File Upload -->
+						<div class="mb-3">
+							<label class="form-label">Choose a file...</label>
+							<InputFile OnChange="HandleFileSelected" />
+						</div>
+
+						<!-- Display Box for holding image-->
+						<div class="mb-3">
+							<div style="width: 300px; height: 300px; border: 1px solid #ccc; overflow:hidden;">
+								@if (!string.IsNullOrEmpty(_imageDataURL))
+								{
+									<img src="@_imageDataURL" alt="Uploaded Image" style="width: 100%; height: 100%; object-fit:cover;" />
+								}
+								else
+								{
+									<p>No image uploaded.</p>
+								}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-8">
 				<div class="card shadow-sm">
 					<div class="card-header bg-primary text-dark mb-0">
 						<h5 class="card-title justify-content-center">Data Artifact Page</h5>
 					</div>
 					<div class="card-body">
+
+						<!-- Data Artifact Name -->
 						<div class="mb-3">
 							<label for="dataArtifactName" class="form-label">Name</label>
 							<input type="text" class="form-control" id="dataArtifactName" placeholder="Name" @bind="_DataArtifactInputModel.Name" />
 							<ValidationMessage For="@(() => _DataArtifactInputModel.Name)" />
 						</div>
+
+						<!-- Data Artifact Type ID -->
 						<div class="mb-3">
 							<label for="dataArtifactTypeID" class="form-label">Artifact Type ID</label>
 							<InputSelect class="form-select" id="dataArtifactTypeID" @bind-Value="_DataArtifactInputModel.DataArtifactTypeID">
@@ -27,16 +61,15 @@
 							</InputSelect>
 							<ValidationMessage For="@(() => _DataArtifactInputModel.DataArtifactTypeID)" />
 						</div>
-						<div class="mb-3">
-							<label for="dataArtifactImageURL" class="form-label">Image URL</label>
-							<input type="text" class="form-control" id="dataArtifactImageURL" placeholder="Image URL" @bind="_DataArtifactInputModel.ImageURL" />
-							<ValidationMessage For="@(() => _DataArtifactInputModel.ImageURL)" />
-						</div>
+
+						<!-- Data Artifact Raw Alien Text-->
 						<div class="mb-3">
 							<label for="dataArtifactRawAlienText" class="form-label">Raw Artifact Text</label>
 							<textarea class="form-control" id="dataArtifactRawAlienText" rows="3" @bind="_rawText"></textarea>
 							<ValidationMessage For="@(() => _rawText)" />
 						</div>
+
+						<!-- Data Artifact Source-->
 						<div class="mb-3">
 							<label for="dataArtifactSource" class="form-label">Source</label>
 							<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_DataArtifactInputModel.Source" />
@@ -44,9 +77,11 @@
 						</div>
 						<button type="submit" class="btn btn-primary align-items-end">Submit</button>
 					</div>
-					@if (_DataArtifactInputModel.RawAlienText != null)
+
+					<!-- Display the encoded Alien text -->
+					@if (!string.IsNullOrEmpty(_DataArtifactInputModel.RawAlienText))
 					{
-						<div class="mb-3">
+						<div class="ms-3 mb-3">
 							<p>
 								<strong>Alien Text:</strong> @_DataArtifactInputModel.RawAlienText
 							</p>
@@ -54,9 +89,10 @@
 
 					}
 
-					@if (_DataArtifactInputModel.TranslatedText != null)
+					<!-- Display the decoded Alien text -->
+					@if (!string.IsNullOrEmpty(_DataArtifactInputModel.TranslatedText))
 					{
-						<div class="mb-3">
+						<div class="ms-3 mb-3">
 							<p>
 								<strong>Decoded Alien Text:</strong> @_DataArtifactInputModel.TranslatedText
 							</p>
@@ -70,23 +106,68 @@
 </EditForm>
 @code {
 
+	// Common fields for managing data artifacts and file uploads
 	private DataArtifact _DataArtifact { get; set; } = new DataArtifact();
 	private DataArtifactInputModel _DataArtifactInputModel { get; set; } = new DataArtifactInputModel();
 	private string _rawText = string.Empty;
+	private string _imageDataURL = string.Empty;
 
+	/// <summary>
+	/// Creates a new instance of the DataArtifact class and assigns the values from the DataArtifactInputModel.
+	/// Inserts the DataArtifact into the database asynchronously.
+	/// </summary>
+	/// <returns>A task representing the async operation.</returns>
 	protected async Task SubmitDataArtifact()
 	{
+		// Encode the raw text and decode to simulate Alien language conversion
 		_DataArtifactInputModel.RawAlienText = AlienLanguageConverter.Encode(_rawText);
 		_DataArtifactInputModel.TranslatedText = AlienLanguageConverter.Decode(_rawText);
 
-		_DataArtifact = new DataArtifact(_DataArtifactInputModel.Name, _DataArtifactInputModel.DataArtifactTypeID, _DataArtifactInputModel.ImageURL, _DataArtifactInputModel.RawAlienText, _DataArtifactInputModel.TranslatedText, _DataArtifactInputModel.Source);
+		// Create a new DataArtifact instance using the input model
+		_DataArtifact = new DataArtifact(
+			_DataArtifactInputModel.Name, 
+			_DataArtifactInputModel.DataArtifactTypeID, 
+			_DataArtifactInputModel.ImageURL, 
+			_DataArtifactInputModel.RawAlienText, 
+			_DataArtifactInputModel.TranslatedText, 
+			_DataArtifactInputModel.Source);
 
+		// Check if the DataArtifact is not null before inserting
 		if (_DataArtifact != null)
 		{
+			// Asyncally insert the DataArtifact into the database
 			await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
 			return;
-		}
 
+		}
 	}
 
+	/// <summary>
+	/// Converts a selected file to base64 string and assigns it to the DataArtifactInputModel.
+	/// </summary>
+	/// <param name="e">The event args containing the selected file.</param>
+	private async Task HandleFileSelected(InputFileChangeEventArgs e)
+	{
+		// Retrieves first file from event
+		var file = e.File;
+
+		// Open read stream for selected file, limited to 2 MB
+		using var stream = file.OpenReadStream(maxAllowedSize: 2 * 1024 * 1024);
+
+		// Creates temporary memory stream to hold file
+		using var ms = new MemoryStream();
+
+		// Async Copy file's stream into the memory stream
+		await stream.CopyToAsync(ms);
+
+		// Converts Memorystream into Bytes Array for base64 conversion
+		var bytes = ms.ToArray();
+
+		// Convert byte array to base 64 and format it
+		_imageDataURL = $"data:{file.ContentType};base64,{Convert.ToBase64String(bytes)}";
+
+		// Assigned base64 image to InputModel
+		_DataArtifactInputModel.ImageURL = _imageDataURL;
+
+	}
 }
