@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange
 {
-    internal class DataArtifactType
+    public class DataArtifactType
     {
         [Key]
-        private Guid ID = Guid.NewGuid();   
+        public int ID { get; init; }
 
         // Common Properties
-        private string _Name { get; init; } = String.Empty;
-        private string _Description { get; init; } = String.Empty;
+        public string Name { get; init; } = String.Empty;
+        public string Description { get; init; } = String.Empty;
 
     }
 }

@@ -1,4 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Design;
 
 /*
  Assignment Title
@@ -100,6 +105,11 @@ namespace GalacticDataExchange
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
+
+            var configuration = builder.Configuration;
+
+            builder.Services.AddDbContext<DataDBContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("AlienConnection")));
 
             builder.Services.AddMauiBlazorWebView();
 
