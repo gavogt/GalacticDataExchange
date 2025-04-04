@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GalacticDataExchange
+namespace GalacticDataExchange.Shared
 {
     public class DataArtifact
     {
@@ -29,7 +29,7 @@ namespace GalacticDataExchange
 
         public string EncryptionKey { get; init; }
 
-        public string? VideoURL { get; set; } 
+        public string? VideoURL { get; set; }
 
         // Foreign Key
         public int DataArtifactTypeID { get; init; }
@@ -39,8 +39,8 @@ namespace GalacticDataExchange
 
         public DataArtifact()
         {
-            
-        } 
+
+        }
 
         public DataArtifact(string name, int dataArtifactTypeID, string? imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp, string? videoURL)
         {

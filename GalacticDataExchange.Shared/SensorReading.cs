@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GalacticDataExchange
+namespace GalacticDataExchange.Shared
 {
     internal class SensorReading
     {
@@ -23,6 +23,6 @@ namespace GalacticDataExchange
 
         // EF Navigation
         [ForeignKey(nameof(SensorID))]
-        Sensor? Sensor { get; set; } 
+        Sensor? Sensor { get; set; }
     }
 }

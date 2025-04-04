@@ -1,5 +1,7 @@
 ﻿@page "/dataArtifactPage"
 
+@using GalacticDataExchange.Shared;
+
 @inject DataArtifactDatabaseService DataArtifactDatabaseService
 
 <EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">

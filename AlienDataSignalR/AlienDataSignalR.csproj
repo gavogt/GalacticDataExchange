@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GalacticDataExchange.Shared">
+      <HintPath>..\GalacticDataExchange.Shared\bin\Debug\net9.0\GalacticDataExchange.Shared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

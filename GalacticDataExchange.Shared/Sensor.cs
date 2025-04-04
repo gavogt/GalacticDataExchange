@@ -5,18 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
-namespace GalacticDataExchange
+namespace GalacticDataExchange.Shared
 {
     internal class Sensor
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SensorID { get; set; } 
+        public int SensorID { get; set; }
         public string SensorType { get; set; } = String.Empty;
         public string Location { get; set; } = String.Empty;
 
         public ICollection<SensorReading> Readings { get; set; } = new List<SensorReading>();
     }
 }
+

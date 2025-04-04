@@ -74,4 +74,10 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="GalacticDataExchange.Shared">
+        <HintPath>..\GalacticDataExchange.Shared\bin\Debug\net9.0\GalacticDataExchange.Shared.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
