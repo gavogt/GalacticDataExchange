@@ -1,0 +1,6 @@
+@AlienDataSignalR_HostAddress = http://localhost:5111
+
+GET {{AlienDataSignalR_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
