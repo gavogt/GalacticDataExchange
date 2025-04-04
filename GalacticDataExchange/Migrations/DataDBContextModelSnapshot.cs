@@ -36,7 +36,6 @@ namespace GalacticDataExchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -56,6 +55,9 @@ namespace GalacticDataExchange.Migrations
 
                     b.Property<string>("TranslatedText")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

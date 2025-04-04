@@ -13,25 +13,62 @@
 					</div>
 					<div class="card-body">
 
-						<!-- File Upload -->
-						<div class="mb-3">
-							<label class="form-label">Choose a file...</label>
-							<InputFile OnChange="HandleFileSelected" />
-						</div>
+						<div>
+							<label>Select File Type:</label>
+							<InputRadioGroup TValue="string" @bind-Value="_SelectedFileType" class="mb-3">
+								<InputRadio TValue="string" Value=@("Image") /> Image
+								<InputRadio TValue="string" Value=@("Video") /> Video
+							</InputRadioGroup>
 
-						<!-- Display Box for holding image-->
-						<div class="mb-3">
-							<div style="width: 300px; height: 300px; border: 1px solid #ccc; overflow:hidden;">
-								@if (!string.IsNullOrEmpty(_imageDataURL))
-								{
-									<img src="@_imageDataURL" alt="Uploaded Image" style="width: 100%; height: 100%; object-fit:cover;" />
-								}
-								else
-								{
-									<p>No image uploaded.</p>
-								}
-							</div>
 
+							@if (_SelectedFileType == "Image")
+							{
+								<!-- Image File Upload -->
+								<div class="mb-3">
+									<label class="form-label">Choose a file...</label>
+									<InputFile OnChange="HandleFileSelected" />
+								</div>
+
+								<!-- Display Box for holding image-->
+								<div class="mb-3">
+									<div style="width: 300px; height: 300px; border: 1px solid #ccc; overflow:hidden;">
+										@if (!string.IsNullOrEmpty(_imageDataURL))
+										{
+											<img src="@_imageDataURL" alt="Uploaded Image" style="width: 100%; height: 100%; object-fit:cover;" />
+										}
+										else
+										{
+											<p>No image uploaded.</p>
+										}
+									</div>
+								</div>
+
+							}
+							else if (_SelectedFileType == "Video")
+							{
+								<!-- Video File Upload -->
+								<div class="mb-3">
+									<label class="form-label">Choose a video file...</label>
+									<InputFile OnChange="HandleVideoFileSelected" />
+								</div>
+
+								<!-- Display Box for holding video-->
+								<div class="mb-3">
+									<div style="width: 300px; height: 300px; border: 1px solid #ccc; overflow:hidden;">
+										@if (!string.IsNullOrEmpty(_DataArtifactInputModel.VideoURL))
+										{
+											<video width="300" controls style="height: 100%">
+												<source src="@_DataArtifactInputModel.VideoURL" type="video/mp4" />
+												Your browser does not support the video tag.
+											</video>
+										}
+										else
+										{
+											<p>No video uploaded.</p>
+										}
+									</div>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
@@ -109,8 +146,10 @@
 	// Common fields for managing data artifacts and file uploads
 	private DataArtifact _DataArtifact { get; set; } = new DataArtifact();
 	private DataArtifactInputModel _DataArtifactInputModel { get; set; } = new DataArtifactInputModel();
-	private string _rawText = string.Empty;
-	private string _imageDataURL = string.Empty;
+	private string _rawText = String.Empty;
+	private string _imageDataURL = String.Empty;
+	private string _ErrorMessage = String.Empty;
+	private string _SelectedFileType { get; set; } = "Image";
 
 	/// <summary>
 	/// Creates a new instance of the DataArtifact class and assigns the values from the DataArtifactInputModel.
@@ -126,8 +165,22 @@
 		// Encrypt the DataArtifactInputModel EncryptionKey using the EncryptionHelper
 		_DataArtifactInputModel = EncryptionHelper.EncryptionKeyToDataArtifact(_DataArtifactInputModel);
 
+		if (_DataArtifactInputModel == null)
+		{
+			_ErrorMessage = "Please fill in all required fields.";
+			return;
+		}
+
+		if (string.IsNullOrEmpty(_DataArtifactInputModel.ImageURL) && string.IsNullOrEmpty(_DataArtifactInputModel.VideoURL))
+		{
+			// Display error message if no image or video is uploaded
+			_ErrorMessage = "Please upload an image or video.";
+			return;
+		}
+
 		// Create a new DataArtifact instance using the input model
 		_DataArtifact = new DataArtifact(
+
 			_DataArtifactInputModel.Name,
 			_DataArtifactInputModel.DataArtifactTypeID,
 			_DataArtifactInputModel.ImageURL,
@@ -135,7 +188,8 @@
 			_DataArtifactInputModel.TranslatedText,
 			_DataArtifactInputModel.Source,
 			_DataArtifactInputModel.EncryptionKey,
-			_DataArtifactInputModel.TimeStamp
+			_DataArtifactInputModel.TimeStamp,
+			_DataArtifactInputModel.VideoURL
 	);
 
 		// Check if the DataArtifact is not null before inserting
@@ -175,5 +229,37 @@
 		// Assigned base64 image to InputModel
 		_DataArtifactInputModel.ImageURL = _imageDataURL;
 
+	}
+
+	/// <summary>
+	/// Saves a selected video file to a local folder and
+	///  sets the Input Model's VideoURL to the path.
+	/// </summary>
+	/// <param name="e">The event args containing the selected file.</param>
+	private async Task HandleVideoFileSelected(InputFileChangeEventArgs e)
+	{
+		// Returns first file from event
+		var file = e.File;
+
+		// Define folder path for saving videos
+		var folderPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "videos");
+
+		// Create the directory that will hold the videos if it doesn't exist
+		Directory.CreateDirectory(folderPath);
+
+		// Combine folderPath and fileName and assign it to full filePath
+		var filePath = Path.Combine(folderPath, file.Name);
+
+		// Open stream to read selected file, limited to 50mb
+		using var stream = file.OpenReadStream(maxAllowedSize: 50 * 1024 * 1024);
+
+		// Create file stream to save file to disk
+		using var fileStream = new FileStream(filePath, FileMode.Create);
+
+		// Async copy the uploaded file content to new file
+		await stream.CopyToAsync(fileStream);
+
+		// Set the videoURL to relative path
+		_DataArtifactInputModel.VideoURL = $"/videos/{file.Name}";
 	}
 }

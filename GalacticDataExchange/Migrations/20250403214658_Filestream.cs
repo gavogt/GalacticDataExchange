@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class EncryptionHelper : Migration
+    public partial class Filestream : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,12 +33,13 @@ namespace GalacticDataExchange.Migrations
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RawAlienText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EncryptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataArtifactTypeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250403184017_EncryptionHelper")]
-    partial class EncryptionHelper
+    [Migration("20250403214658_Filestream")]
+    partial class Filestream
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,6 @@ namespace GalacticDataExchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -59,6 +58,9 @@ namespace GalacticDataExchange.Migrations
 
                     b.Property<string>("TranslatedText")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

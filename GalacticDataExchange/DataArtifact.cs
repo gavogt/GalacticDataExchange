@@ -17,7 +17,7 @@ namespace GalacticDataExchange
         // Common Properties
         public string Name { get; init; }
 
-        public string ImageURL { get; init; }
+        public string? ImageURL { get; init; }
 
         public string RawAlienText { get; init; }
 
@@ -29,6 +29,8 @@ namespace GalacticDataExchange
 
         public string EncryptionKey { get; init; }
 
+        public string? VideoURL { get; set; } 
+
         // Foreign Key
         public int DataArtifactTypeID { get; init; }
 
@@ -38,9 +40,9 @@ namespace GalacticDataExchange
         public DataArtifact()
         {
             
-        }
+        } 
 
-        public DataArtifact(string name, int dataArtifactTypeID, string imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp)
+        public DataArtifact(string name, int dataArtifactTypeID, string? imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp, string? videoURL)
         {
             Name = name;
             DataArtifactTypeID = dataArtifactTypeID;
@@ -50,8 +52,8 @@ namespace GalacticDataExchange
             Source = source;
             EncryptionKey = encryptionKey;
             TimeStamp = timestamp;
+            VideoURL = videoURL;
 
         }
-
     }
 }

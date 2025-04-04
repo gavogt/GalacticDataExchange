@@ -12,8 +12,7 @@ namespace GalacticDataExchange
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "Image URL is required")]
-        public string ImageURL { get; set; } = String.Empty;
+        public string? ImageURL { get; set; } = String.Empty;
 
         public string RawAlienText { get; set; } = String.Empty;
 
@@ -29,6 +28,8 @@ namespace GalacticDataExchange
         public DateTime TimeStamp { get; set; } = DateTime.Now;
 
         public string EncryptionKey { get; set; } = String.Empty;
+
+        public string? VideoURL { get; set; } = String.Empty;
 
 
     }

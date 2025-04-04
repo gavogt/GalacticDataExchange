@@ -20,15 +20,18 @@ namespace GalacticDataExchange
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // DataArtifactType is mapped to DataArtifact's DataArtifactTypeID
             modelBuilder.Entity<DataArtifact>()
                 .HasOne(d => d.DataArtifactType)
                 .WithMany()
                 .HasForeignKey(d => d.DataArtifactTypeID);
 
+            // DataArtifactType ID is generated on add
             modelBuilder.Entity<DataArtifactType>()
                 .Property(dat => dat.ID)
                 .ValueGeneratedOnAdd();
 
+            // Seed Data for DataArtifactType
             modelBuilder.Entity<DataArtifactType>().HasData(
                 new DataArtifactType { ID = 1, Name = "Holographic Memory Cube", Description = "A cube that stores data in a holographic matrix." },
                 new DataArtifactType { ID = 2, Name = "Encrypted Sensor Log", Description = "A sensor log that has been encrypted." },
