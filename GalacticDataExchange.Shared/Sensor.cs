@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class Sensor
+    public class Sensor
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

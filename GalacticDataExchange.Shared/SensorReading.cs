@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class SensorReading
+    public class SensorReading
     {
         [Key]
         public Guid ID { get; init; } = Guid.NewGuid();
