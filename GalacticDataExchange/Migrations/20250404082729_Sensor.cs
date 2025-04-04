@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class Filestream : Migration
+    public partial class Sensor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

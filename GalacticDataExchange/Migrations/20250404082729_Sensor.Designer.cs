@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250403214658_Filestream")]
-    partial class Filestream
+    [Migration("20250404082729_Sensor")]
+    partial class Sensor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
