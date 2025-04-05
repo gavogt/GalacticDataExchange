@@ -1,5 +1,6 @@
 ﻿using GalacticDataExchange;
 using GalacticDataExchange.Shared;
+using System;
 using static System.Console;
 
 
@@ -14,11 +15,32 @@ internal class Program
         // Start the SignalR client
         await sensorClient.StartAsync();
 
-        // Simulate a sensor reading
-        var sensorReading = new SensorReading(42.0, "Celsius", 1);
+        int readingCount = rand.Next(1, 10);
 
-        // Send the sensor reading to the SignalR hub
-        await sensorClient.SendSensorReadingAsync(sensorReading);
+        for (int i = 0; i < readingCount; i++)
+        {
+            // Array of sensor types
+            string[] sensorTypes = { "Temperature", "Pressure", "Humidity", "Light", "Vibration", "Motion" };
+
+            // Randomly select a sensor type
+            string randomType = sensorTypes[rand.Next(sensorTypes.Length)];
+
+            // Randomly select a sensor ID
+            int sensorID = rand.Next(1, sensorTypes.Length);
+
+            // Randomly generate a sensor value
+            double randomValue = rand.NextDouble() * 100;
+
+            // Get a random unit for the selected sensor type
+            string randomUnit = AlienUnitDictionary.GetRandomUnit(randomType);
+
+            // Simulate a sensor reading
+            var sensorReading = new SensorReading(randomValue, randomUnit, sensorID);
+
+            // Send the sensor reading to the SignalR hub
+            await sensorClient.SendSensorReadingAsync(sensorReading);
+
+        }
 
         WriteLine("Sensor reading sent.");
 

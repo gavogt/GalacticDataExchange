@@ -15,7 +15,7 @@ namespace GalacticDataExchange.Shared
 
         // Common Properties
         public DateTime TimeStamp { get; init; } = DateTime.Now;
-        public double Value { get; set; }
+        public double Value { get; set; } = 0.0;
         public string Unit { get; set; } = String.Empty;
 
         // Foreign Key
@@ -29,7 +29,7 @@ namespace GalacticDataExchange.Shared
         {
             Value = value;
             Unit = unit;
-            SensorID = sensorID;
+            SensorID = sensorID; 
 
         }
     }
