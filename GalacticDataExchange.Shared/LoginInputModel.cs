@@ -8,13 +8,13 @@ namespace GalacticDataExchange.Shared
 {
     public class LoginInputModel
     {
-        private string _email;
-        private string _password;
+        public string Email;
+        public string Password;
 
         public LoginInputModel(string email, string password)
         {
-            _email = email;
-            _password = password;
+            Email = email;
+            Password = password;
         }
     }
 }
