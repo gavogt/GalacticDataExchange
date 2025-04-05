@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GalacticDataExchange.Shared;
 
-namespace GalacticDataExchange
+namespace GalacticDataExchange.Shared
 {
-    internal class DataArtifactDatabaseService
+    public class DataArtifactDatabaseService
     {
         private readonly DataDBContext _context;
 

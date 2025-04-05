@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace GalacticDataExchange.Migrations
+namespace GalacticDataExchange.Shared.Migrations
 {
     /// <inheritdoc />
-    public partial class Sensor : Migration
+    public partial class SensorTable3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +25,20 @@ namespace GalacticDataExchange.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DataArtifactTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sensors",
+                columns: table => new
+                {
+                    SensorID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SensorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sensors", x => x.SensorID);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,6 +67,27 @@ namespace GalacticDataExchange.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SensorReadings",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Value = table.Column<double>(type: "float", nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SensorID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SensorReadings", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_SensorReadings_Sensors_SensorID",
+                        column: x => x.SensorID,
+                        principalTable: "Sensors",
+                        principalColumn: "SensorID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "DataArtifactTypes",
                 columns: new[] { "ID", "Description", "Name" },
@@ -63,10 +98,25 @@ namespace GalacticDataExchange.Migrations
                     { 3, "An image of a relic that has been digitized.", "Digital Relic Image" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Sensors",
+                columns: new[] { "SensorID", "Location", "SensorType" },
+                values: new object[,]
+                {
+                    { 1, "Bridge", "Temperature" },
+                    { 2, "Engineering", "Pressure" },
+                    { 3, "Cargo Bay", "Radiation" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DataArtifacts_DataArtifactTypeID",
                 table: "DataArtifacts",
                 column: "DataArtifactTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SensorReadings_SensorID",
+                table: "SensorReadings",
+                column: "SensorID");
         }
 
         /// <inheritdoc />
@@ -76,7 +126,13 @@ namespace GalacticDataExchange.Migrations
                 name: "DataArtifacts");
 
             migrationBuilder.DropTable(
+                name: "SensorReadings");
+
+            migrationBuilder.DropTable(
                 name: "DataArtifactTypes");
+
+            migrationBuilder.DropTable(
+                name: "Sensors");
         }
     }
 }

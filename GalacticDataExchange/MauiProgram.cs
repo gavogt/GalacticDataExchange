@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Design;
+using GalacticDataExchange.Shared;
 
 /*
  Assignment Title
@@ -117,13 +118,21 @@ namespace GalacticDataExchange
             builder.Services.AddMauiBlazorWebView();
 
             builder.Services.AddScoped<DataArtifactDatabaseService>();
-
+            builder.Services.AddScoped<ISensorService, SensorService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var mauiApp = builder.Build();
+
+            using (var scope = mauiApp.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<DataDBContext>();
+                dbContext.Database.Migrate();
+            }
+
+            return mauiApp;
         }
     }
 }

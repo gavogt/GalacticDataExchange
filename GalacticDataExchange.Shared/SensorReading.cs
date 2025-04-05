@@ -23,6 +23,6 @@ namespace GalacticDataExchange.Shared
 
         // EF Navigation
         [ForeignKey(nameof(SensorID))]
-        Sensor? Sensor { get; set; }
+        public Sensor? Sensor { get; set; }
     }
 }

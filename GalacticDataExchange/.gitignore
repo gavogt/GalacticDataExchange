@@ -1,2 +1,6 @@
-﻿appsettings.json
+﻿bin/
+obj/
+*.user
+*.suo
+appsettings.json
 DataDBContextFactory.cs

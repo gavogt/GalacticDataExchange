@@ -3,6 +3,7 @@
 @using GalacticDataExchange.Shared;
 
 @inject DataArtifactDatabaseService DataArtifactDatabaseService
+@inject ISensorService SensorService
 
 <EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">
 	<DataAnnotationsValidator />
@@ -114,6 +115,40 @@
 							<input type="text" class="form-control" id="dataArtifactSource" placeholder="Source" @bind="_DataArtifactInputModel.Source" />
 							<ValidationMessage For="@(() => _DataArtifactInputModel.Source)" />
 						</div>
+
+						<!-- Sensor portion -->
+						<div class="mb-3">
+							@if (Sensors == null)
+							{
+								<p><em>Loading sensors...</em></p>
+							}
+							else if (!Sensors.Any())
+							{
+								<p>No sensors available.</p>
+							}
+							else
+							{
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Sensor ID</th>
+											<th>Sensor Type</th>
+											<th>Location</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var sensor in Sensors)
+										{
+											<tr>
+												<td>@sensor.SensorID</td>
+												<td>@sensor.SensorType</td>
+												<td>@sensor.Location</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							}
+						</div>
 						<button type="submit" class="btn btn-primary align-items-end">Submit</button>
 					</div>
 
@@ -152,6 +187,12 @@
 	private string _imageDataURL = String.Empty;
 	private string _ErrorMessage = String.Empty;
 	private string _SelectedFileType { get; set; } = "Image";
+	private List<Sensor> Sensors;
+
+	protected override async Task OnInitializedAsync()
+	{
+		Sensors = await SensorService.GetSensorsAsync();
+	}
 
 	/// <summary>
 	/// Creates a new instance of the DataArtifact class and assigns the values from the DataArtifactInputModel.

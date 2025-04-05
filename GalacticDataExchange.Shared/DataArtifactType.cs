@@ -6,16 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GalacticDataExchange.Shared;
-
-public class DataArtifactType
+namespace GalacticDataExchange.Shared
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int ID { get; init; }
 
-    // Common Properties
-    public string Name { get; init; } = String.Empty;
-    public string Description { get; init; } = String.Empty;
+    public class DataArtifactType
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; init; }
+
+        // Common Properties
+        public string Name { get; init; } = String.Empty;
+        public string Description { get; init; } = String.Empty;
+
+    }
 
 }
