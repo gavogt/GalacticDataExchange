@@ -119,6 +119,7 @@ namespace GalacticDataExchange
 
             builder.Services.AddScoped<DataArtifactDatabaseService>();
             builder.Services.AddScoped<ISensorService, SensorService>();
+            builder.Services.AddScoped<ISensorReadingService, SensorReadingService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();

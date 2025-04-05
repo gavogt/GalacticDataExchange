@@ -4,6 +4,7 @@
 
 @inject DataArtifactDatabaseService DataArtifactDatabaseService
 @inject ISensorService SensorService
+@inject ISensorReadingService SensorReadingService
 
 <EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">
 	<DataAnnotationsValidator />
@@ -149,6 +150,24 @@
 								</table>
 							}
 						</div>
+
+						<!-- Sensor Reading Simulation -->
+						<div class="mb-3">
+							@if (SensorReadings != null)
+							{
+								@foreach (var reading in SensorReadings)
+								{
+									<p>Sensor ID: @reading.SensorID</p>
+									<p>Reading Value: @reading.Value</p>
+									<p>Timestamp: @reading.Unit</p>
+								}
+
+							}
+							else
+							{
+								<p><em>Loading sensor readings...</em></p>
+							}
+						</div>
 						<button type="submit" class="btn btn-primary align-items-end">Submit</button>
 					</div>
 
@@ -187,11 +206,13 @@
 	private string _imageDataURL = String.Empty;
 	private string _ErrorMessage = String.Empty;
 	private string _SelectedFileType { get; set; } = "Image";
-	private List<Sensor> Sensors;
+	private List<Sensor>? Sensors;
+	private List<SensorReading>? SensorReadings;
 
 	protected override async Task OnInitializedAsync()
 	{
 		Sensors = await SensorService.GetSensorsAsync();
+		SensorReadings = await SensorReadingService.GetSensorReadingsAsync();
 	}
 
 	/// <summary>

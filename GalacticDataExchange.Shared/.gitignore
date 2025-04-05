@@ -3,4 +3,5 @@ obj/
 *.user
 *.suo
 
+appsettings.json
 DataDbContextFactory.cs 

@@ -15,12 +15,7 @@ internal class Program
         await sensorClient.StartAsync();
 
         // Simulate a sensor reading
-        var sensorReading = new SensorReading
-        {
-            SensorID = rand.Next(1, 1000),
-            Value = 42.0,
-            Unit = "Celsius",
-        };
+        var sensorReading = new SensorReading(42.0, "Celsius", 1);
 
         // Send the sensor reading to the SignalR hub
         await sensorClient.SendSensorReadingAsync(sensorReading);

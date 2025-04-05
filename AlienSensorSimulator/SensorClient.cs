@@ -15,14 +15,14 @@ namespace GalacticDataExchange
         {
             // Build the connection to the SignalR hub at specified URL
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:7183/sensorhub")
+                .WithUrl("https://localhost:7183/sensorhub")
                 .Build();
 
             // Handler for ReceiveSensorReading event
             // This will be called when a sensor reading is received from the hub
             _hubConnection.On<SensorReading>("ReceiveSensorReading", (sensorReading) =>
             {
-                Console.WriteLine($"Received sensor reading: {sensorReading.Value}");
+                Console.WriteLine($"Received sensor reading: ID:{sensorReading.ID} VALUE:{sensorReading.Value} UNIT{sensorReading.Unit}");
             });
 
         }
