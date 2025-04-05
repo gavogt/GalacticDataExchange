@@ -21,11 +21,14 @@ namespace GalacticDataExchange.Shared
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Sensor's Readings is mapped to SensorReading's Sensor
+            // on SensorReading's SensorID
             modelBuilder.Entity<Sensor>()
                 .HasMany(s => s.Readings)
                 .WithOne(sr => sr.Sensor)
                 .HasForeignKey(sr => sr.SensorID);
 
+            // Sensor ID is generated on add
             modelBuilder.Entity<Sensor>()
                 .Property(s => s.SensorID)
                 .ValueGeneratedOnAdd();
