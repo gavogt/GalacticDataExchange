@@ -16,8 +16,8 @@ namespace AlienDataSignalR.Controllers
             // Simulate fetching sensor data from a database or other source
             return new List<Sensor>
             {
-                new Sensor{ SensorID = 1, SensorType="Temperature", Location="Lab A"},
-                new Sensor{ SensorID =2, SensorType="Pressure", Location="Lab B"},
+                new Sensor{ ID = 1, Type="Temperature", Location="Lab A"},
+                new Sensor{ ID =2, Type="Pressure", Location="Lab B"},
             };
         }
     }

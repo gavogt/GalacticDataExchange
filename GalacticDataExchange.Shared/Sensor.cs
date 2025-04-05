@@ -12,8 +12,10 @@ namespace GalacticDataExchange.Shared
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SensorID { get; set; }
-        public string SensorType { get; set; } = String.Empty;
+        public int ID { get; set; }
+
+        public string Name { get; set; } = String.Empty;
+        public string Type { get; set; } = String.Empty;
         public string Location { get; set; } = String.Empty;
 
         public ICollection<SensorReading> Readings { get; set; } = new List<SensorReading>();

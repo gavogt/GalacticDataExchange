@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Shared.Migrations
 {
     /// <inheritdoc />
-    public partial class SensorTable3 : Migration
+    public partial class SeedSensor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,14 +31,15 @@ namespace GalacticDataExchange.Shared.Migrations
                 name: "Sensors",
                 columns: table => new
                 {
-                    SensorID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SensorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sensors", x => x.SensorID);
+                    table.PrimaryKey("PK_Sensors", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +85,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         name: "FK_SensorReadings_Sensors_SensorID",
                         column: x => x.SensorID,
                         principalTable: "Sensors",
-                        principalColumn: "SensorID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -100,12 +101,15 @@ namespace GalacticDataExchange.Shared.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sensors",
-                columns: new[] { "SensorID", "Location", "SensorType" },
+                columns: new[] { "ID", "Location", "Name", "Type" },
                 values: new object[,]
                 {
-                    { 1, "Bridge", "Temperature" },
-                    { 2, "Engineering", "Pressure" },
-                    { 3, "Cargo Bay", "Radiation" }
+                    { 1, "Bridge of the Starfleet", "Thermo-1", "Temperature" },
+                    { 2, "Engineering Deck on the D'Vorik", "Baro-1", "Pressure" },
+                    { 3, "Cargo Bay of the Nebulon", "Hygro-1", "Humidity" },
+                    { 4, "Observation Deck of the Helix", "Lumina-1", "Light" },
+                    { 5, "Propulsion Chamber, Quasar Wing", "Vibro-1", "Vibration" },
+                    { 6, "Navigational Bridge, Delta Sector", "Motion-1", "Motion" }
                 });
 
             migrationBuilder.CreateIndex(

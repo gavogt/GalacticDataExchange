@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Shared.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250404224317_SensorTable4")]
-    partial class SensorTable4
+    [Migration("20250405185731_SeedSensor")]
+    partial class SeedSensor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,42 +113,70 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.Sensor", b =>
                 {
-                    b.Property<int>("SensorID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SensorID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SensorType")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SensorID");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
 
                     b.ToTable("Sensors");
 
                     b.HasData(
                         new
                         {
-                            SensorID = 1,
-                            Location = "Bridge",
-                            SensorType = "Temperature"
+                            ID = 1,
+                            Location = "Bridge of the Starfleet",
+                            Name = "Thermo-1",
+                            Type = "Temperature"
                         },
                         new
                         {
-                            SensorID = 2,
-                            Location = "Engineering",
-                            SensorType = "Pressure"
+                            ID = 2,
+                            Location = "Engineering Deck on the D'Vorik",
+                            Name = "Baro-1",
+                            Type = "Pressure"
                         },
                         new
                         {
-                            SensorID = 3,
-                            Location = "Cargo Bay",
-                            SensorType = "Radiation"
+                            ID = 3,
+                            Location = "Cargo Bay of the Nebulon",
+                            Name = "Hygro-1",
+                            Type = "Humidity"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Location = "Observation Deck of the Helix",
+                            Name = "Lumina-1",
+                            Type = "Light"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Location = "Propulsion Chamber, Quasar Wing",
+                            Name = "Vibro-1",
+                            Type = "Vibration"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Location = "Navigational Bridge, Delta Sector",
+                            Name = "Motion-1",
+                            Type = "Motion"
                         });
                 });
 

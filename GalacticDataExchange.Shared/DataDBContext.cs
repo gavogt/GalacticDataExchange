@@ -22,7 +22,7 @@ namespace GalacticDataExchange.Shared
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Sensor's Readings is mapped to SensorReading's Sensor
-            // on SensorReading's SensorID
+            // on SensorReading's ID
             modelBuilder.Entity<Sensor>()
                 .HasMany(s => s.Readings)
                 .WithOne(sr => sr.Sensor)
@@ -30,7 +30,7 @@ namespace GalacticDataExchange.Shared
 
             // Sensor ID is generated on add
             modelBuilder.Entity<Sensor>()
-                .Property(s => s.SensorID)
+                .Property(s => s.ID)
                 .ValueGeneratedOnAdd();
 
             // DataArtifactType is mapped to DataArtifact's DataArtifactTypeID
@@ -46,10 +46,49 @@ namespace GalacticDataExchange.Shared
 
             // Seed Data for Sensor
             modelBuilder.Entity<Sensor>().HasData(
-                new Sensor { SensorID = 1, SensorType = "Temperature", Location = "Bridge" },
-                new Sensor { SensorID = 2, SensorType = "Pressure", Location = "Engineering" },
-                new Sensor { SensorID = 3, SensorType = "Radiation", Location = "Cargo Bay" }
-            );
+                new Sensor
+                {
+                    ID = 1,
+                    Name = "Thermo-1",
+                    Type = "Temperature",
+                    Location = "Bridge of the Starfleet"
+                },
+                new Sensor
+                {
+                    ID = 2,
+                    Name = "Baro-1",
+                    Type = "Pressure",
+                    Location = "Engineering Deck on the D'Vorik"
+                },
+                new Sensor
+                {
+                    ID = 3,
+                    Name = "Hygro-1",
+                    Type = "Humidity",
+                    Location = "Cargo Bay of the Nebulon"
+                },
+                new Sensor
+                {
+                    ID = 4,
+                    Name = "Lumina-1",
+                    Type = "Light",
+                    Location = "Observation Deck of the Helix"
+                },
+                new Sensor
+                {
+                    ID = 5,
+                    Name = "Vibro-1",
+                    Type = "Vibration",
+                    Location = "Propulsion Chamber, Quasar Wing"
+                },
+                new Sensor
+                {
+                    ID = 6,
+                    Name = "Motion-1",
+                    Type = "Motion",
+                    Location = "Navigational Bridge, Delta Sector"
+                });
+
 
             // Seed Data for DataArtifactType
             modelBuilder.Entity<DataArtifactType>().HasData(

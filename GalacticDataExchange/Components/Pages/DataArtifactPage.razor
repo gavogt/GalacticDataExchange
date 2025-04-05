@@ -133,6 +133,7 @@
 									<thead>
 										<tr>
 											<th>Sensor ID</th>
+											<th>Sensor Name</th>
 											<th>Sensor Type</th>
 											<th>Location</th>
 										</tr>
@@ -141,8 +142,9 @@
 										@foreach (var sensor in Sensors)
 										{
 											<tr>
-												<td>@sensor.SensorID</td>
-												<td>@sensor.SensorType</td>
+												<td>@sensor.ID</td>
+												<td>@sensor.Name</td>
+												<td>@sensor.Type</td>
 												<td>@sensor.Location</td>
 											</tr>
 										}
