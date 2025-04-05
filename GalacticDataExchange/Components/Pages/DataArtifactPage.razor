@@ -155,12 +155,27 @@
 						<div class="mb-3">
 							@if (SensorReadings != null)
 							{
-								@foreach (var reading in SensorReadings)
-								{
-									<p>Sensor ID: @reading.SensorID</p>
-									<p>Reading Value: @reading.Value</p>
-									<p>Timestamp: @reading.Unit</p>
-								}
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Sensor ID</th>
+											<th>Value</th>
+											<th>Unit</th>
+											<th>TimeStamp</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var reading in SensorReadings)
+										{
+											<tr>
+												<td>@reading.SensorID</td>
+												<td>@reading.Value</td>
+												<td>@reading.Unit</td>
+												<td>@reading.TimeStamp</td>
+											</tr>
+										}
+									</tbody>
+								</table>
 
 							}
 							else
