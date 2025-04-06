@@ -1,7 +1,75 @@
 ﻿@page "/signup"
 
-<h3>SignUp</h3>
+@using GalacticDataExchange.Shared;
 
+<EditForm Model="@signUpModel" OnValidSubmit="HandleSignUp">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-6">
+				<div class="card shadow-sm">
+					<div class="card-body">
+						<img src="images/galacticdataexchange.png" alt="Galactic Data Exchange" class="img-fluid" />
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="card shadow-sm">
+					<div class="card-header text-center">
+						<img src="images/galacticlogo2.png" alt="Galactic Data Exchange" class="img-fluid logo-img mb-2" />
+						<h5 class="card-title">Sign Up</h5>
+						<p><em>Submit your Data Artifacts</em></p>
+					</div>
+					<div class="card-body d-flex justify-content-center">
+						<div class="w-75">
+							<div class="mb-3">
+								<label for="email" class="form-label">Email</label>
+								<InputText id="email" class="form-control" @bind-Value="signUpModel.Email" />
+								<ValidationMessage For="@(() => signUpModel.Email)" />
+							</div>
+							<div class="mb-3">
+								<label for="firstName" class="form-label">First Name</label>
+								<InputText id="firstName" class="form-control" @bind-Value="signUpModel.FirstName" />
+								<ValidationMessage For="@(() => signUpModel.FirstName)" />
+							</div>
+							<div class="mb-3">
+								<label for="lastName" class="form-label">Last Name</label>
+								<InputText id="lastName" class="form-control" @bind-Value="signUpModel.LastName" />
+								<ValidationMessage For="@(() => signUpModel.LastName)" />
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label">Password</label>
+								<InputText id="password" class="form-control" @bind-Value="signUpModel.Password" type="password" />
+								<ValidationMessage For="@(() => signUpModel.Password)" />
+							</div>
+							<div class="mb-3">
+								<label for="confirmPassword" class="form-label">Confirm Password</label>
+								<InputText id="confirmPassword" class="form-control" @bind-Value="ConfirmPassword" type="password" />
+								<ValidationMessage For="@(() => ConfirmPassword)" />
+							</div>
+							<div class="mb-3">
+								<p>Already have an account? <a href="/login">Login here</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</EditForm>
 @code {
+	private SignUpModel signUpModel { get; set; } = new SignUpModel();
+	private string ConfirmPassword { get; set; } = String.Empty;
 
+	private void HandleSignUp()
+	{
+		if (signUpModel.Password != ConfirmPassword)
+		{
+			// Handle password mismatch
+			return;
+		}
+		// Proceed
+	}
 }

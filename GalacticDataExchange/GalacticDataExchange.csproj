@@ -61,6 +61,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AndroidResource Remove="wwwroot\NewFolder\**" />
+      <Compile Remove="wwwroot\NewFolder\**" />
+      <Content Remove="wwwroot\NewFolder\**" />
+      <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+      <None Remove="wwwroot\NewFolder\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
@@ -81,6 +89,14 @@
       <Reference Include="GalacticDataExchange.Shared">
         <HintPath>..\GalacticDataExchange.Shared\bin\Debug\net9.0\GalacticDataExchange.Shared.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiImage Include="wwwroot\images\galacticdataexchange.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\images\galacticdataexchange.png" />
     </ItemGroup>
 
 </Project>

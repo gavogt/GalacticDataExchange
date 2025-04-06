@@ -86,3 +86,8 @@ h1:focus {
         padding-left: env(safe-area-inset-left);
     }
 }
+
+.logo-img{
+    max-height: 80px;
+    width: auto;
+}

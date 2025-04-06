@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class SignUpModel
+    public class SignUpModel
     {
         [Required(ErrorMessage = "Email is required.")]
         public string Email;
@@ -18,12 +18,5 @@ namespace GalacticDataExchange.Shared
         [Required(ErrorMessage = "Last name is required.")]
         public string LastName;
 
-        public SignUpModel(string email, string password, string firstName, string lastName)
-        {
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
-        }
     }
 }
