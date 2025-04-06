@@ -88,6 +88,10 @@ h1:focus {
 }
 
 .logo-img{
-    max-height: 80px;
+    max-height: 120px;
     width: auto;
+}
+
+.page {
+    background: linear-gradient(to right, #102060,#0060a5);
 }

@@ -91,12 +91,4 @@
       </Reference>
     </ItemGroup>
 
-    <ItemGroup>
-      <MauiImage Include="wwwroot\images\galacticdataexchange.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="wwwroot\images\galacticdataexchange.png" />
-    </ItemGroup>
-
 </Project>
