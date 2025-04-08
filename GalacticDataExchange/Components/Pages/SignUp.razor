@@ -3,6 +3,7 @@
 @using GalacticDataExchange.Shared;
 
 @inject NavigationManager NavigationManager
+@inject SignUpDatabaseService SignUpDatabaseService
 
 <EditForm Model="@_signUpModel" OnValidSubmit="HandleSignUp">
 	<DataAnnotationsValidator />
@@ -74,9 +75,9 @@
 	private UserSignUpModel _signUpModel { get; set; } = new UserSignUpModel();
 	private string _confirmPassword { get; set; } = String.Empty;
 	private string _errorMessage { get; set; } = String.Empty;
-	private User _user = new User();
+	private User? _user = new User();
 
-	private void HandleSignUp()
+	private async Task HandleSignUp()
 	{
 		if (_signUpModel.Password != _confirmPassword)
 		{
@@ -85,6 +86,7 @@
 		}
 		else
 		{
+
 			_user = new User
 				{
 					Email = _signUpModel.Email,
@@ -92,6 +94,15 @@
 					LastName = _signUpModel.LastName,
 					Password = _signUpModel.Password
 				};
+
+			if(_user != null)
+			{
+				await SignUpDatabaseService.InsertUserIntoDatabase(_user);
+			}
+			else
+			{
+				_errorMessage = "User could not be created.";
+			}			
 
 			NavigationManager.NavigateTo("/");
 		}

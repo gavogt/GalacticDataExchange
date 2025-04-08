@@ -14,6 +14,7 @@ namespace GalacticDataExchange.Shared
         public DbSet<DataArtifactType> DataArtifactTypes { get; set; }
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<SensorReading> SensorReadings { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DataDBContext(DbContextOptions<DataDBContext> options) : base(options)
         {
