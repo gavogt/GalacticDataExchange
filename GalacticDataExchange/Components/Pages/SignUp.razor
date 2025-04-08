@@ -76,6 +76,8 @@
 	private string _confirmPassword { get; set; } = String.Empty;
 	private string _errorMessage { get; set; } = String.Empty;
 	private User? _user = new User();
+	private PasswordHasher passwordHasher = new PasswordHasher();
+	private string _hash = String.Empty;
 
 	private async Task HandleSignUp()
 	{
@@ -87,22 +89,24 @@
 		else
 		{
 
+			_hash = await passwordHasher.HashPasswordAsync(_signUpModel.Password);
+
 			_user = new User
 				{
 					Email = _signUpModel.Email,
 					FirstName = _signUpModel.FirstName,
 					LastName = _signUpModel.LastName,
-					Password = _signUpModel.Password
+					Password = _hash
 				};
 
-			if(_user != null)
+			if (_user != null)
 			{
 				await SignUpDatabaseService.InsertUserIntoDatabase(_user);
 			}
 			else
 			{
 				_errorMessage = "User could not be created.";
-			}			
+			}
 
 			NavigationManager.NavigateTo("/");
 		}

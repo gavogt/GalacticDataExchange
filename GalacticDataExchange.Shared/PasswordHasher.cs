@@ -8,7 +8,7 @@ using Konscious.Security.Cryptography;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class PasswordHasher
+    public class PasswordHasher
     {
         public async Task<string> HashPasswordAsync(string password)
         {
