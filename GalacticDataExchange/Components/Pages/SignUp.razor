@@ -2,7 +2,9 @@
 
 @using GalacticDataExchange.Shared;
 
-<EditForm Model="@signUpModel" OnValidSubmit="HandleSignUp">
+@inject NavigationManager NavigationManager
+
+<EditForm Model="@_signUpModel" OnValidSubmit="HandleSignUp">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
 	<div class="container my-5">
@@ -25,37 +27,43 @@
 						<div class="col-md-10 mx-auto">
 							<div class="mb-3">
 								<label for="email" class="form-label">Email</label>
-								<InputText id="email" placeholder="Enter your email address" class="form-control" @bind-Value="signUpModel.Email" />
-								<ValidationMessage For="@(() => signUpModel.Email)" />
+								<InputText id="email" placeholder="Enter your email address" class="form-control" @bind-Value="_signUpModel.Email" />
+								<ValidationMessage For="@(() => _signUpModel.Email)" />
 							</div>
 							<div class="mb-3">
 								<label for="firstName" class="form-label">First Name</label>
-								<InputText id="firstName" placeholder="Enter your first name" class="form-control" @bind-Value="signUpModel.FirstName" />
-								<ValidationMessage For="@(() => signUpModel.FirstName)" />
+								<InputText id="firstName" placeholder="Enter your first name" class="form-control" @bind-Value="_signUpModel.FirstName" />
+								<ValidationMessage For="@(() => _signUpModel.FirstName)" />
 							</div>
 							<div class="mb-3">
 								<label for="lastName" class="form-label">Last Name</label>
-								<InputText id="lastName" placeholder="Enter your last name" class="form-control" @bind-Value="signUpModel.LastName" />
-								<ValidationMessage For="@(() => signUpModel.LastName)" />
+								<InputText id="lastName" placeholder="Enter your last name" class="form-control" @bind-Value="_signUpModel.LastName" />
+								<ValidationMessage For="@(() => _signUpModel.LastName)" />
 							</div>
 							<div class="mb-3">
 								<label for="password" class="form-label">Password</label>
-								<InputText id="password" placeholder="Enter your password" class="form-control" @bind-Value="signUpModel.Password" type="password" />
-								<ValidationMessage For="@(() => signUpModel.Password)" />
+								<InputText id="password" placeholder="Enter your password" class="form-control" @bind-Value="_signUpModel.Password" type="password" />
+								<ValidationMessage For="@(() => _signUpModel.Password)" />
 							</div>
 							<div class="mb-3">
 								<label for="confirmPassword" class="form-label">Confirm Password</label>
-								<InputText id="confirmPassword" placeholder="Confirm your password" class="form-control" @bind-Value="ConfirmPassword" type="password" />
-								<ValidationMessage For="@(() => ConfirmPassword)" />
+								<InputText id="confirmPassword" placeholder="Confirm your password" class="form-control" @bind-Value="_confirmPassword" type="password" />
+								<ValidationMessage For="@(() => _confirmPassword)" />
 							</div>
 							<div class="mb-3">
 								<button class="btn btn-primary rounded-pill shadow">Submit</button>
 							</div>
 							<div class="mb-3">
-								<p>Already have an account? <a href="/login">Login here</a></p>
+								<p>Already have an account? <a href="/lo in">Login here</a></p>
 							</div>
 						</div>
 					</div>
+					@if (!string.IsNullOrEmpty(_errorMessage))
+					{
+						<div class="alert alert-danger" role="alert">
+							@_errorMessage
+						</div>
+					}
 				</div>
 			</div>
 		</div>
@@ -63,16 +71,29 @@
 
 </EditForm>
 @code {
-	private UserSignUpModel signUpModel { get; set; } = new UserSignUpModel();
-	private string ConfirmPassword { get; set; } = String.Empty;
+	private UserSignUpModel _signUpModel { get; set; } = new UserSignUpModel();
+	private string _confirmPassword { get; set; } = String.Empty;
+	private string _errorMessage { get; set; } = String.Empty;
+	private User _user = new User();
 
 	private void HandleSignUp()
 	{
-		if (signUpModel.Password != ConfirmPassword)
+		if (_signUpModel.Password != _confirmPassword)
 		{
-			// Handle password mismatch
+			_errorMessage = "Passwords do not match.";
 			return;
 		}
-		// Proceed
+		else
+		{
+			_user = new User
+				{
+					Email = _signUpModel.Email,
+					FirstName = _signUpModel.FirstName,
+					LastName = _signUpModel.LastName,
+					Password = _signUpModel.Password
+				};
+
+			NavigationManager.NavigateTo("/");
+		}
 	}
 }
