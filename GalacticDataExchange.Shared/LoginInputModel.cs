@@ -9,7 +9,7 @@ namespace GalacticDataExchange.Shared
 {
     public class LoginInputModel
     {
-        [Required(ErrorMessage = "Email is required.")]
+        [Required(ErrorMessage = "Email is required."), EmailAddress]
         public string Email = String.Empty;
         [Required(ErrorMessage = "Password is required.")]
         public string Password = String.Empty;

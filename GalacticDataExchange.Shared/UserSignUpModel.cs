@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    public class SignUpModel
+    public class UserSignUpModel
     {
-        [Required(ErrorMessage = "Email is required.")]
+        [Required(ErrorMessage = "Email is required."), EmailAddress]
         public string Email;
         [Required(ErrorMessage = "Password is required.")]
         public string Password;

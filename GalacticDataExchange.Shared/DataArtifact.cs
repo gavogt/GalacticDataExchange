@@ -16,29 +16,23 @@ namespace GalacticDataExchange.Shared
 
         // Common Properties
         public string Name { get; init; }
-
         public string? ImageURL { get; init; }
-
         public string RawAlienText { get; init; }
-
         public string TranslatedText { get; set; }
-
         public DateTime TimeStamp { get; init; }
-
         public string Source { get; init; }
-
         public string EncryptionKey { get; init; }
-
         public string? VideoURL { get; set; }
 
         // Foreign Key
         public int DataArtifactTypeID { get; init; }
+        public Guid UserID { get; init; }
 
-        // Ef Navigation
+        // Ef Navigation Properties
         public DataArtifactType? DataArtifactType { get; set; }
-
         public User? User { get; set; }
 
+        // Ctor
         public DataArtifact()
         {
 

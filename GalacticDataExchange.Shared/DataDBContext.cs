@@ -39,6 +39,12 @@ namespace GalacticDataExchange.Shared
                 .WithMany()
                 .HasForeignKey(d => d.DataArtifactTypeID);
 
+            // User is mapped to DataArtifact's User
+            modelBuilder.Entity<DataArtifact>()
+                .HasOne(d => d.User)
+                .WithMany()
+                .HasForeignKey(d => d.UserID);
+
             // DataArtifactType Id is generated on add
             modelBuilder.Entity<DataArtifactType>()
                 .Property(dat => dat.ID)

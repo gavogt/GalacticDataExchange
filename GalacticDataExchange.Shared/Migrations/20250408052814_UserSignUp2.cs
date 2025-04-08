@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Shared.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedSensor : Migration
+    public partial class UserSignUp2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,29 +43,18 @@ namespace GalacticDataExchange.Shared.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DataArtifacts",
+                name: "User",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RawAlienText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EncryptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataArtifactTypeID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DataArtifacts", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_DataArtifacts_DataArtifactTypes_DataArtifactTypeID",
-                        column: x => x.DataArtifactTypeID,
-                        principalTable: "DataArtifactTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,13 +74,46 @@ namespace GalacticDataExchange.Shared.Migrations
                         name: "FK_SensorReadings_Sensors_SensorID",
                         column: x => x.SensorID,
                         principalTable: "Sensors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DataArtifacts",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RawAlienText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EncryptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataArtifactTypeID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DataArtifacts", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DataArtifacts_DataArtifactTypes_DataArtifactTypeID",
+                        column: x => x.DataArtifactTypeID,
+                        principalTable: "DataArtifactTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DataArtifacts_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "DataArtifactTypes",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "ID", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "A cube that stores data in a holographic matrix.", "Holographic Memory Cube" },
@@ -101,7 +123,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sensors",
-                columns: new[] { "Id", "Location", "Name", "Type" },
+                columns: new[] { "ID", "Location", "Name", "Type" },
                 values: new object[,]
                 {
                     { 1, "Bridge of the Starfleet", "Thermo-1", "Temperature" },
@@ -116,6 +138,11 @@ namespace GalacticDataExchange.Shared.Migrations
                 name: "IX_DataArtifacts_DataArtifactTypeID",
                 table: "DataArtifacts",
                 column: "DataArtifactTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DataArtifacts_UserID",
+                table: "DataArtifacts",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SensorReadings_SensorID",
@@ -134,6 +161,9 @@ namespace GalacticDataExchange.Shared.Migrations
 
             migrationBuilder.DropTable(
                 name: "DataArtifactTypes");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Sensors");

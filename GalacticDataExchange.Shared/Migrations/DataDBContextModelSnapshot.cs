@@ -24,7 +24,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifact", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -57,23 +57,28 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("VideoURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("DataArtifactTypeID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("DataArtifacts");
                 });
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifactType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -83,7 +88,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("DataArtifactTypes");
 
@@ -110,11 +115,11 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.Sensor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -128,7 +133,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Sensors");
 
@@ -179,7 +184,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.SensorReading", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -196,11 +201,38 @@ namespace GalacticDataExchange.Shared.Migrations
                     b.Property<double>("Value")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("SensorID");
 
                     b.ToTable("SensorReadings");
+                });
+
+            modelBuilder.Entity("GalacticDataExchange.Shared.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifact", b =>
@@ -211,7 +243,15 @@ namespace GalacticDataExchange.Shared.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GalacticDataExchange.Shared.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("DataArtifactType");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GalacticDataExchange.Shared.SensorReading", b =>

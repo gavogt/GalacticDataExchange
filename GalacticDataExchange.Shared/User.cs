@@ -10,20 +10,26 @@ namespace GalacticDataExchange.Shared
     public class User
     {
         [Key]
-        public Guid Id = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         // Common properties
-        private string _email;
-        private string _password;
-        private string _firstName;
-        private string _lastName;
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        // Ctor
+        public User()
+        {
+
+        }
 
         public User(string email, string password, string firstName, string lastName)
         {
-            _email = email;
-            _password = password;
-            _firstName = firstName;
-            _lastName = lastName;
+            Email = email;
+            Password = password;
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }

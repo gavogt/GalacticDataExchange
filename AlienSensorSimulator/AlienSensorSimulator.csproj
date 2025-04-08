@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GalacticDataExchange.Shared\GalacticDataExchange.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="GalacticDataExchange.Shared">
       <HintPath>..\GalacticDataExchange.Shared\bin\Debug\net9.0\GalacticDataExchange.Shared.dll</HintPath>
     </Reference>

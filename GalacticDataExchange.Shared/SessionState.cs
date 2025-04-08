@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class SessionState
+    public class SessionState
     {
-        private User? _currentUser { get; set; }
+        public User? CurrentUser { get; set; }
 
     }
 }
