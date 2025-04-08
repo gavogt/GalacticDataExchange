@@ -21,7 +21,7 @@ namespace GalacticDataExchange
         [Required(ErrorMessage = "Source is required")]
         public string Source { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "Data Artifact Type ID is required")]
+        [Required(ErrorMessage = "Data Artifact Type Id is required")]
         [Range(1, 3)]
         public int DataArtifactTypeID { get; set; } = 0;
 

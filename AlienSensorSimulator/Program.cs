@@ -25,7 +25,7 @@ internal class Program
             // Randomly select a sensor type
             string randomType = sensorTypes[rand.Next(sensorTypes.Length)];
 
-            // Randomly select a sensor ID
+            // Randomly select a sensor Id
             int sensorID = rand.Next(1, sensorTypes.Length);
 
             // Randomly generate a sensor value

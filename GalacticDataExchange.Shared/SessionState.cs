@@ -8,5 +8,7 @@ namespace GalacticDataExchange.Shared
 {
     internal class SessionState
     {
+        private User? _currentUser { get; set; }
+
     }
 }

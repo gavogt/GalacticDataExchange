@@ -22,7 +22,7 @@ namespace GalacticDataExchange
             // This will be called when a sensor reading is received from the hub
             _hubConnection.On<SensorReading>("ReceiveSensorReading", (sensorReading) =>
             {
-                Console.WriteLine($"Received sensor reading: ID:{sensorReading.ID} VALUE:{sensorReading.Value} UNIT{sensorReading.Unit}");
+                Console.WriteLine($"Received sensor reading: Id:{sensorReading.ID} VALUE:{sensorReading.Value} UNIT{sensorReading.Unit}");
             });
 
         }

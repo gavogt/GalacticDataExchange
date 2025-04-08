@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GalacticDataExchange.Shared
 {
-    internal class User
+    public class User
     {
         [Key]
-        public Guid ID = Guid.NewGuid();
+        public Guid Id = Guid.NewGuid();
 
         // Common properties
         private string _email;

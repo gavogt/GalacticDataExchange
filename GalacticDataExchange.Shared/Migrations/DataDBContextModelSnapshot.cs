@@ -24,7 +24,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifact", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -60,7 +60,7 @@ namespace GalacticDataExchange.Shared.Migrations
                     b.Property<string>("VideoURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("DataArtifactTypeID");
 
@@ -69,11 +69,11 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifactType", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -83,7 +83,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("DataArtifactTypes");
 
@@ -110,11 +110,11 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.Sensor", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -128,7 +128,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Sensors");
 
@@ -179,7 +179,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             modelBuilder.Entity("GalacticDataExchange.Shared.SensorReading", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -196,7 +196,7 @@ namespace GalacticDataExchange.Shared.Migrations
                     b.Property<double>("Value")
                         .HasColumnType("float");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("SensorID");
 

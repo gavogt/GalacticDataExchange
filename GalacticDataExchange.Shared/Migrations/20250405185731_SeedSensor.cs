@@ -64,7 +64,7 @@ namespace GalacticDataExchange.Shared.Migrations
                         name: "FK_DataArtifacts_DataArtifactTypes_DataArtifactTypeID",
                         column: x => x.DataArtifactTypeID,
                         principalTable: "DataArtifactTypes",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -85,13 +85,13 @@ namespace GalacticDataExchange.Shared.Migrations
                         name: "FK_SensorReadings_Sensors_SensorID",
                         column: x => x.SensorID,
                         principalTable: "Sensors",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "DataArtifactTypes",
-                columns: new[] { "ID", "Description", "Name" },
+                columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "A cube that stores data in a holographic matrix.", "Holographic Memory Cube" },
@@ -101,7 +101,7 @@ namespace GalacticDataExchange.Shared.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sensors",
-                columns: new[] { "ID", "Location", "Name", "Type" },
+                columns: new[] { "Id", "Location", "Name", "Type" },
                 values: new object[,]
                 {
                     { 1, "Bridge of the Starfleet", "Thermo-1", "Temperature" },

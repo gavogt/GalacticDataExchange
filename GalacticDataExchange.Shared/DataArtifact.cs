@@ -37,6 +37,8 @@ namespace GalacticDataExchange.Shared
         // Ef Navigation
         public DataArtifactType? DataArtifactType { get; set; }
 
+        public User? User { get; set; }
+
         public DataArtifact()
         {
 
