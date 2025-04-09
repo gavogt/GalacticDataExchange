@@ -3,16 +3,17 @@
 
 @inject SessionState SessionState
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<CascadingValue Value="SessionState">
+	<div class="page">
+		<div class="sidebar">
+			<NavMenu />
+		</div>
 
-    <main>
-        <CascadingValue Value="SessionState">
-        <article class="content px-4">
-            @Body
-        </article>
-        </CascadingValue>
-    </main>
-</div>
+		<main>
+			<article class="content px-4">
+				@Body
+			</article>
+
+		</main>
+	</div>
+</CascadingValue>
