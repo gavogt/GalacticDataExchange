@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using GalacticDataExchange.Shared;
+@inherits LayoutComponentBase
+
+@inject SessionState SessionState
 
 <div class="page">
     <div class="sidebar">
@@ -6,9 +9,10 @@
     </div>
 
     <main>
-
+        <CascadingValue Value="SessionState">
         <article class="content px-4">
             @Body
         </article>
+        </CascadingValue>
     </main>
 </div>
