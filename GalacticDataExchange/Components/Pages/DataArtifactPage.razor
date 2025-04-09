@@ -19,13 +19,13 @@
 
 						<div>
 							<label>Select File Type:</label>
-							<InputRadioGroup TValue="string" @bind-Value="_SelectedFileType" class="mb-3">
+							<InputRadioGroup TValue="string" @bind-Value="_selectedFileType" class="mb-3">
 								<InputRadio TValue="string" Value=@("Image") /> Image
 								<InputRadio TValue="string" Value=@("Video") /> Video
 							</InputRadioGroup>
 
 
-							@if (_SelectedFileType == "Image")
+							@if (_selectedFileType == "Image")
 							{
 								<!-- Image File Upload -->
 								<div class="mb-3">
@@ -48,7 +48,7 @@
 								</div>
 
 							}
-							else if (_SelectedFileType == "Video")
+							else if (_selectedFileType == "Video")
 							{
 								<!-- Video File Upload -->
 								<div class="mb-3">
@@ -221,10 +221,13 @@
 	private DataArtifactInputModel _DataArtifactInputModel { get; set; } = new DataArtifactInputModel();
 	private string _rawText = String.Empty;
 	private string _imageDataURL = String.Empty;
-	private string _ErrorMessage = String.Empty;
-	private string _SelectedFileType { get; set; } = "Image";
+	private string _errorMessage = String.Empty;
+	private string _selectedFileType { get; set; } = "Image";
 	private List<Sensor>? Sensors;
 	private List<SensorReading>? SensorReadings;
+
+	[CascadingParameter]
+	SessionState? SessionState { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -248,14 +251,20 @@
 
 		if (_DataArtifactInputModel == null)
 		{
-			_ErrorMessage = "Please fill in all required fields.";
+			_errorMessage = "Please fill in all required fields.";
 			return;
 		}
 
 		if (string.IsNullOrEmpty(_DataArtifactInputModel.ImageURL) && string.IsNullOrEmpty(_DataArtifactInputModel.VideoURL))
 		{
 			// Display error message if no image or video is uploaded
-			_ErrorMessage = "Please upload an image or video.";
+			_errorMessage = "Please upload an image or video.";
+			return;
+		}
+
+		if(SessionState?.CurrentUser == null)
+		{
+			_errorMessage = "User not logged in.";
 			return;
 		}
 
@@ -270,7 +279,8 @@
 			_DataArtifactInputModel.Source,
 			_DataArtifactInputModel.EncryptionKey,
 			_DataArtifactInputModel.TimeStamp,
-			_DataArtifactInputModel.VideoURL
+			_DataArtifactInputModel.VideoURL,
+			_DataArtifactInputModel.UserID = SessionState.CurrentUser.Id
 	);
 
 		// Check if the DataArtifact is not null before inserting

@@ -38,7 +38,7 @@ namespace GalacticDataExchange.Shared
 
         }
 
-        public DataArtifact(string name, int dataArtifactTypeID, string? imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp, string? videoURL)
+        public DataArtifact(string name, int dataArtifactTypeID, string? imageURL, string rawAlienText, string translatedText, string source, string encryptionKey, DateTime timestamp, string? videoURL, Guid userID)
         {
             Name = name;
             DataArtifactTypeID = dataArtifactTypeID;
@@ -49,6 +49,7 @@ namespace GalacticDataExchange.Shared
             EncryptionKey = encryptionKey;
             TimeStamp = timestamp;
             VideoURL = videoURL;
+            UserID = userID;
 
         }
     }

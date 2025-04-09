@@ -31,6 +31,8 @@ namespace GalacticDataExchange
 
         public string? VideoURL { get; set; } = String.Empty;
 
+        public Guid UserID { get; set; } = Guid.Empty;
+
 
     }
 }
