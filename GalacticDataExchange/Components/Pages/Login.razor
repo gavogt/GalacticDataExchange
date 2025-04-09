@@ -1,6 +1,7 @@
 ﻿@page "/login"
 
 @using GalacticDataExchange.Shared;
+@using Microsoft.EntityFrameworkCore;
 
 @inject NavigationManager NavigationManager
 @inject DataDBContext DataDBContext
@@ -48,6 +49,10 @@
 	private string _errorMessage { get; set; } = String.Empty;
 	private AuthenticationService? _authService { get; set; }
 
+	[CascadingParameter]
+	SessionState? SessionState { get; set; }
+
+
 	private async Task HandleLogin()
 	{
 		if (!string.IsNullOrEmpty(_loginModel.Email) && !string.IsNullOrEmpty(_loginModel.Password))
@@ -58,6 +63,14 @@
 
 			if (isValidUser)
 			{
+				var user = await DataDBContext.Users.SingleOrDefaultAsync(u => u.Email == _loginModel.Email);
+
+				if (user != null && SessionState != null)
+				{
+					SessionState.CurrentUser = user;
+
+				}
+
 				NavigationManager.NavigateTo("/user-dashboard");
 			}
 			else
