@@ -3,8 +3,10 @@
 @using GalacticDataExchange.Shared;
 
 @inject NavigationManager NavigationManager
+@inject DataDBContext DataDBContext
+@inject AuthenticationService AuthenticationService
 
-<EditForm Model="@LoginModel" OnValidSubmit="HandleLogin">
+<EditForm Model="@_loginModel" OnValidSubmit="HandleLogin">
 	<DataAnnotationsValidator />
 	<div class="container my-5">
 		<div class="row justify-content-center">
@@ -17,20 +19,20 @@
 					<div class="card-body">
 						<div class="mb-3">
 							<label for="email" class="form-label">Email</label>
-							<InputText id="email" class="form-control" placeholder="Enter your email" @bind-Value="LoginModel.Email" />
-							<ValidationMessage For="@(() => LoginModel.Email)" />
+							<InputText id="email" class="form-control" placeholder="Enter your email" @bind-Value="_loginModel.Email" />
+							<ValidationMessage For="@(() => _loginModel.Email)" />
 						</div>
 						<div class="mb-3">
 							<label for="password" class="form-label">Password</label>
-							<InputText id="password" type="password" class="form-control" placeholder="Enter your password" @bind-Value="LoginModel.Password" />
-							<ValidationMessage For="@(() => LoginModel.Password)" />
+							<InputText id="password" type="password" class="form-control" placeholder="Enter your password" @bind-Value="_loginModel.Password" />
+							<ValidationMessage For="@(() => _loginModel.Password)" />
 						</div>
 						<button class="btn btn-primary rounded-pill">Submit</button>
 					</div>
-					@if (!string.IsNullOrEmpty(ErrorMessage))
+					@if (!string.IsNullOrEmpty(_errorMessage))
 					{
 						<div class="alert alert-danger" role="alert">
-							<p>@ErrorMessage</p>
+							<p>@_errorMessage</p>
 						</div>
 					}
 				</div>
@@ -39,21 +41,29 @@
 	</div>
 	<ValidationSummary />
 </EditForm>
+
 @code {
 
-	LoginInputModel LoginModel { get; set; } = new LoginInputModel();
-	private string ErrorMessage { get; set; } = String.Empty;
+	private LoginInputModel _loginModel { get; set; } = new LoginInputModel();
+	private string _errorMessage { get; set; } = String.Empty;
+	private AuthenticationService? _authService { get; set; }
 
-
-	private void HandleLogin()
+	private async Task HandleLogin()
 	{
-		if (!string.IsNullOrEmpty(LoginModel.Email) && !string.IsNullOrEmpty(LoginModel.Password))
+		if (!string.IsNullOrEmpty(_loginModel.Email) && !string.IsNullOrEmpty(_loginModel.Password))
 		{
-			NavigationManager.NavigateTo("/user-dashboard");
-		}
-		else
-		{
-			ErrorMessage = "Please enter valid credentials.";
+
+			_authService = new AuthenticationService(DataDBContext);
+			bool isValidUser = await _authService.AutheticateUserAsync(_loginModel.Email, _loginModel.Password);
+
+			if (isValidUser)
+			{
+				NavigationManager.NavigateTo("/user-dashboard");
+			}
+			else
+			{
+				_errorMessage = "Invalid email or password.";
+			}
 		}
 	}
 }
