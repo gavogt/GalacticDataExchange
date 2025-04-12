@@ -290,7 +290,7 @@
 			// Asyncally insert the DataArtifact into the database
 			await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
 
-			// Redirect to the user dashboard after successful insertion
+			// Redirect to the data artifact success page after successful insertion
 			NavigationManager.NavigateTo("/data-artifact-success");
 			return;
 
