@@ -5,6 +5,7 @@
 @inject DataArtifactDatabaseService DataArtifactDatabaseService
 @inject ISensorService SensorService
 @inject ISensorReadingService SensorReadingService
+@inject NavigationManager NavigationManager
 
 <EditForm Model="_DataArtifactInputModel" OnValidSubmit="SubmitDataArtifact">
 	<DataAnnotationsValidator />
@@ -288,6 +289,9 @@
 		{
 			// Asyncally insert the DataArtifact into the database
 			await DataArtifactDatabaseService.InsertDataArtifactAsync(_DataArtifact);
+
+			// Redirect to the user dashboard after successful insertion
+			NavigationManager.NavigateTo("/data-artifact-success");
 			return;
 
 		}
