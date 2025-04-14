@@ -87,11 +87,34 @@ h1:focus {
     }
 }
 
-.logo-img{
+.logo-img {
     max-height: 120px;
     width: auto;
 }
 
 .page {
     background: linear-gradient(to right, #102060,#0060a5);
+    display: flex;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+}
+
+.footer {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 800px;
 }
