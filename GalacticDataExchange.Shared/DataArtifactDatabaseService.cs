@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GalacticDataExchange.Shared
 {
@@ -28,15 +29,15 @@ namespace GalacticDataExchange.Shared
             }
         }
 
-        public async Task GetDataArtifactAsync(Guid id)
+        public async Task<List<DataArtifact>> GetDataArtifactAsync(int DataArtifactTypeID)
         {
             try
             {
-                var dataArtifact = await _context.DataArtifacts.FindAsync(id);
-                if (dataArtifact == null)
-                {
-                    throw new Exception("Data artifact not found");
-                }
+                var dataArtifact = await _context.DataArtifacts
+                    .Where(a => a.DataArtifactTypeID == DataArtifactTypeID)
+                    .ToListAsync();
+
+                return dataArtifact;
             }
             catch (Exception ex)
             {

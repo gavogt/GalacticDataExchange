@@ -1,6 +1,9 @@
 ﻿@page "/related-artifacts"
 
+@using GalacticDataExchange.Shared;
+
 @inject DataArtifactTypeDatabaseService DataArtifactTypeDatabaseService
+@inject DataArtifactDatabaseService DataArtifactDatabaseService
 
 @using GalacticDataExchange.Shared;
 <EditForm Model="_dataArtifactInputModel">
@@ -26,10 +29,20 @@
 									</select>
 								</label>
 								<ValidationMessage For="@(() => _dataArtifactInputModel.DataArtifactTypeID)" />
+								<button class="btn btn-primary rounded-pill shadow" @onclick="FilteredArtifacts">Filter Artifacts</button>
 							</div>
 							<div class="mb-3">
-								<label>
-								</label>
+								@if(_filteredDataArtifact != null)
+								{
+									<p>
+										@foreach (var artifact in _filteredDataArtifact)
+										{
+											<span class="badge bg-primary text-light">
+												ID: @artifact.DataArtifactType &mdash; NAME:@artifact.Name &mdash; DESCRIPTION:@artifact.TranslatedText
+											</span>
+										}
+									</p>
+								}
 							</div>
 						</div>
 					</div>
@@ -50,7 +63,7 @@
 	</div>
 </EditForm>
 @code {
-	private DataArtifact? _filteredDataArtifact = new();
+	private List<DataArtifact> _filteredDataArtifact = new();
 	private List<DataArtifactType> _dataArtifactTypes = new();
 	private DataArtifactInputModel _dataArtifactInputModel = new();
 
@@ -59,18 +72,18 @@
 		_dataArtifactTypes = await DataArtifactTypeDatabaseService.GetAllDataArtifactTypesAsync();
 	}
 
-	/*
+	
 	private async Task FilteredArtifacts()
 	{
 		int selectedArtifactTypeID = _dataArtifactInputModel.DataArtifactTypeID;
 		if (selectedArtifactTypeID > 0)
 		{
-			//_filteredDataArtifact = await 
+			_filteredDataArtifact = await DataArtifactDatabaseService.GetDataArtifactAsync(selectedArtifactTypeID);
 		}
 		else
 		{
-			_filteredDataArtifact = null;
+			throw new Exception("Please select a valid Data Artifact Type.");
 		}
 	}
-	*/
+	
 }
