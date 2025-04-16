@@ -123,6 +123,7 @@ namespace GalacticDataExchange
             builder.Services.AddScoped<SignUpDatabaseService>();
             builder.Services.AddScoped<AuthenticationService>();
             builder.Services.AddScoped<SessionState>();
+            builder.Services.AddScoped<DataArtifactTypeDatabaseService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();

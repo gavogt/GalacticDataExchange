@@ -27,5 +27,21 @@ namespace GalacticDataExchange.Shared
                 throw new Exception("Error inserting data artifact", ex);
             }
         }
+
+        public async Task GetDataArtifactAsync(Guid id)
+        {
+            try
+            {
+                var dataArtifact = await _context.DataArtifacts.FindAsync(id);
+                if (dataArtifact == null)
+                {
+                    throw new Exception("Data artifact not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting data artifact", ex);
+            }
+        }
     }
 }

@@ -1,32 +1,76 @@
 ﻿@page "/related-artifacts"
 
-<div class="container my-5">
-	<div class="row justify-content-center">
-		<div class="col-md-6">
-			<div class="card shadow-sm">
-				<div class="card-header">
-					<h4 class="card-title">Related Artifacts</h4>
-				</div>
-				<div class="card-body">
-					<div class="col-md-12">
+@inject DataArtifactTypeDatabaseService DataArtifactTypeDatabaseService
+
+@using GalacticDataExchange.Shared;
+<EditForm Model="_dataArtifactInputModel">
+	<ValidationSummary />
+	<DataAnnotationsValidator />
+	<div class="container my-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card shadow-sm">
+					<div class="card-header">
+						<h4 class="card-title">Related Artifacts</h4>
+					</div>
+					<div class="card-body">
+						<div class="col-md-12">
+							<div class="mb-3">
+								<label>
+									<select class="form-select" @bind="@_dataArtifactInputModel.DataArtifactTypeID">
+										<option value="0">Select Data Artifact Type</option>
+										@foreach (var artifactType in _dataArtifactTypes)
+										{
+											<option value="@artifactType.ID">ID: @artifactType.ID &mdash; NAME:@artifactType.Name &mdash; DESCRIPTION:@artifactType.Description </option>
+										}
+									</select>
+								</label>
+								<ValidationMessage For="@(() => _dataArtifactInputModel.DataArtifactTypeID)" />
+							</div>
+							<div class="mb-3">
+								<label>
+								</label>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="card shadow-sm">
-				<div class="card-header">
-					<h4 class="card-title">Filtered Artifacts</h4>
-				</div>
-				<div class="card-body">
-					<div class="col-md-12">
+			<div class="col-md-6">
+				<div class="card shadow-sm">
+					<div class="card-header">
+						<h4 class="card-title">Filtered Artifacts</h4>
+					</div>
+					<div class="card-body">
+						<div class="col-md-12">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
+</EditForm>
 @code {
+	private DataArtifact? _filteredDataArtifact = new();
+	private List<DataArtifactType> _dataArtifactTypes = new();
+	private DataArtifactInputModel _dataArtifactInputModel = new();
 
+	protected override async Task OnInitializedAsync()
+	{
+		_dataArtifactTypes = await DataArtifactTypeDatabaseService.GetAllDataArtifactTypesAsync();
+	}
+
+	/*
+	private async Task FilteredArtifacts()
+	{
+		int selectedArtifactTypeID = _dataArtifactInputModel.DataArtifactTypeID;
+		if (selectedArtifactTypeID > 0)
+		{
+			//_filteredDataArtifact = await 
+		}
+		else
+		{
+			_filteredDataArtifact = null;
+		}
+	}
+	*/
 }
