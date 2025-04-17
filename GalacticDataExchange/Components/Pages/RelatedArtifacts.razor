@@ -5,13 +5,11 @@
 @inject DataArtifactTypeDatabaseService DataArtifactTypeDatabaseService
 @inject DataArtifactDatabaseService DataArtifactDatabaseService
 
-@using GalacticDataExchange.Shared;
 <EditForm Model="_dataArtifactInputModel">
-	<ValidationSummary />
 	<DataAnnotationsValidator />
 	<div class="container my-5">
 		<div class="row justify-content-center">
-			<div class="col-md-6">
+			<div class="col-md-8">
 				<div class="card shadow-sm">
 					<div class="card-header">
 						<h4 class="card-title">Related Artifacts</h4>
@@ -28,33 +26,46 @@
 										}
 									</select>
 								</label>
-								<ValidationMessage For="@(() => _dataArtifactInputModel.DataArtifactTypeID)" />
-								<button class="btn btn-primary rounded-pill shadow" @onclick="FilteredArtifacts">Filter Artifacts</button>
-							</div>
-							<div class="mb-3">
-								@if(_filteredDataArtifact != null)
-								{
-									<p>
-										@foreach (var artifact in _filteredDataArtifact)
-										{
-											<span class="badge bg-primary text-light">
-												ID: @artifact.DataArtifactType &mdash; NAME:@artifact.Name &mdash; DESCRIPTION:@artifact.TranslatedText
-											</span>
-										}
-									</p>
-								}
+								<div class="mt-3">
+									<button class="btn btn-primary rounded shadow" @onclick="FilteredArtifacts">Filter Artifacts</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="card shadow-sm">
 					<div class="card-header">
-						<h4 class="card-title">Filtered Artifacts</h4>
+						<h4 class="card-title">Filtered Data Artifacts</h4>
 					</div>
 					<div class="card-body">
 						<div class="col-md-12">
+							<div class="mb-3">
+								@if (_filteredDataArtifact != null && _filteredDataArtifact.Any())
+								{
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>TypeID</th>
+												<th>Name</th>
+												<th>Translated Text</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (var artifact in _filteredDataArtifact)
+											{
+												<tr>
+													<td>@artifact.DataArtifactTypeID</td>
+													<td>@artifact.Name</td>
+													<td>@artifact.TranslatedText</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -72,7 +83,7 @@
 		_dataArtifactTypes = await DataArtifactTypeDatabaseService.GetAllDataArtifactTypesAsync();
 	}
 
-	
+
 	private async Task FilteredArtifacts()
 	{
 		int selectedArtifactTypeID = _dataArtifactInputModel.DataArtifactTypeID;
@@ -85,5 +96,5 @@
 			throw new Exception("Please select a valid Data Artifact Type.");
 		}
 	}
-	
+
 }
