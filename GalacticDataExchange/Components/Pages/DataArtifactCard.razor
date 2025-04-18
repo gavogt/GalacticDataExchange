@@ -1,6 +1,36 @@
 ﻿@page "/data-artifact-card"
+
 @using GalacticDataExchange.Shared;
+
+@inject NavigationManager NavigationManager
+
+<div class="container my-5">
+	<div class="card shadow-sm m-2" style="cursor:pointer" @onclick="@(() => NavigationManager.NavigateTo($"/artifact/{DataArtifact.ID}"))">
+
+		@if (!string.IsNullOrWhiteSpace(DataArtifact.ImageURL))
+		{
+			<img src="@DataArtifact.ImageURL" class="card-img-top" style="height: 140px; object-fit:cover;" alt="Data Artifact Image" />
+		}
+		else if (!string.IsNullOrWhiteSpace(DataArtifact.VideoURL))
+		{
+			<video class="card-img-top" style="height:  140px; object-fit: cover;" muted autoplay loop playsinline">
+				<source src="@DataArtifact.VideoURL" type="video/mp4" />
+				Your browser does not support the video tag.
+			</video>
+		}
+		else
+		{
+			<img src="/images/xelvorr.png" class="card-img-top" alt="Placeholder Image" />
+		}
+
+		<div class="card-body">
+			<h5 class="card-title">@DataArtifact.Name</h5>
+			<p class="card-text text-muted">@DataArtifact.DataArtifactType?.Name</p>
+		</div>
+	</div>
+</div>
 
 @code {
 
+	[Parameter] public DataArtifactViewModel DataArtifact { get; set; } = default!;
 }
