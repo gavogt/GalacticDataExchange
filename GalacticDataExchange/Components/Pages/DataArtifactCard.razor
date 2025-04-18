@@ -9,18 +9,18 @@
 
 		@if (!string.IsNullOrWhiteSpace(DataArtifact.ImageURL))
 		{
-			<img src="@DataArtifact.ImageURL" class="card-img-top" style="height: 140px; object-fit:cover;" alt="Data Artifact Image" />
+				<img src="@DataArtifact.ImageURL" class="card-img-top" style="height: 140px; object-fit:cover;" alt="Data Artifact Image" />
 		}
 		else if (!string.IsNullOrWhiteSpace(DataArtifact.VideoURL))
 		{
-			<video class="card-img-top" style="height:  140px; object-fit: cover;" muted autoplay loop playsinline">
-				<source src="@DataArtifact.VideoURL" type="video/mp4" />
-				Your browser does not support the video tag.
-			</video>
+				<video class="card-img-top" style="height:  140px; object-fit: cover;" muted autoplay loop playsinline">
+					<source src="@DataArtifact.VideoURL" type="video/mp4" />
+					Your browser does not support the video tag.
+				</video>
 		}
 		else
 		{
-			<img src="/images/xelvorr.png" class="card-img-top" alt="Placeholder Image" />
+				<img src="/images/xelvorr.png" class="card-img-top" alt="Placeholder Image" />
 		}
 
 		<div class="card-body">
