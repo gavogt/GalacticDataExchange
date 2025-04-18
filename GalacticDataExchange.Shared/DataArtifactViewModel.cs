@@ -10,9 +10,10 @@ namespace GalacticDataExchange.Shared
     {
         public Guid Id { get; init; }
         public string Name { get; init; } = string.Empty;
-        public int DataArtifactTypeID { get; init; } 
-        public string? ThumbnailURL { get; init; }
+        public int DataArtifactTypeID { get; init; }
+        public string? ImageURL { get; init; }
+        public string? VideoURL { get; init; }
         public string TranslatedText { get; init; } = string.Empty;
-        public int LikeCount { get; set; } 
+        public int LikeCount { get; set; }
     }
 }
