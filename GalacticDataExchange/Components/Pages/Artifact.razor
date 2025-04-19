@@ -3,19 +3,47 @@
 @using GalacticDataExchange.Shared
 @using Microsoft.EntityFrameworkCore;
 
-@inject DataDBContext DataDBContext	
+@inject DataDBContext DataDBContext 
 @inject NavigationManager NavigationManager
+@inject SessionState SessionState
 
-@code{
+@code {
 	[Parameter] public Guid Id { get; set; }
 	private DataArtifact? _artifact;
 
 	protected override async Task OnInitializedAsync()
 	{
-
-		_artifact = await DataDBContext.DataArtifacts
-			.Include(a => a.Likes)
-			.FirstOrDefaultAsync(a => a.ID == Id);
+		// Load the artifact by route ID
+		_artifact = await DataDBContext.DataArtifacts			
+			.Include(a => a.Likes) // Eager load likes collection		
+			.FirstOrDefaultAsync(a => a.ID == Id); // filter by route parameter
 
 	}
+
+	public async Task Like()
+	{
+		if (_artifact == null) return;
+
+		var user = SessionState?.CurrentUser;
+		if (user?.Id == null) return;
+
+		// Create a new Like record
+		var like = new DataArtifactLike
+			{
+				DataArtifactID = _artifact.ID,
+				UserID = user.Id,
+				TimeStamp = DateTime.UtcNow
+			};
+
+		// Add the like to the DataArtifactLikes table
+		DataDBContext.DataArtifactLikes.Add(like);
+
+		// Commit the insert
+		await DataDBContext.SaveChangesAsync();
+
+		// Add like to in-memory likes
+		_artifact.Likes?.Add(like);
+	}
+
+	
 }
