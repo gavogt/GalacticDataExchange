@@ -1,6 +1,8 @@
 ﻿@page "/artifact-gallery"
+
 @using GalacticDataExchange.Shared
 @using Microsoft.EntityFrameworkCore;
+
 @inject DataDBContext DataDBContext
 
 
@@ -31,15 +33,20 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
+
 		_artifacts = await DataDBContext.DataArtifacts
+			.Include(a => a.DataArtifactType)
+			.Include(a => a.Likes)
 			.Select(a => new DataArtifactViewModel
 				{
+
 					Id = a.ID,
 					Name = a.Name,
 					ImageURL = a.ImageURL,
 					VideoURL = a.VideoURL,
 					DataArtifactTypeID = a.DataArtifactTypeID,
-					TranslatedText = a.TranslatedText
+					TranslatedText = a.TranslatedText,
+					LikeCount = (a.Likes != null ? a.Likes.Count : 0)
 
 				})
 				.ToListAsync();
