@@ -1,5 +1,47 @@
-﻿<h3>ArtifactGallery</h3>
+﻿@page "/artifact-gallery"
+@using GalacticDataExchange.Shared
+@using Microsoft.EntityFrameworkCore;
+@inject DataDBContext DataDBContext
+
+
+@if (_artifacts == null)
+{
+	<p><em>Loading...</em></p>
+}
+else if (!_artifacts.Any())
+{
+	<p>No artifacts found.</p>
+}
+else
+{
+	<div class="row row-cols-1 row-cols-md-3 g-3">
+		@foreach (var art in _artifacts)
+		{
+			<div class="col">
+				<DataArtifactCard Artifact="art" />
+			</div>
+		}
+	</div>
+}
+
+
 
 @code {
+	private List<DataArtifactViewModel>? _artifacts;
 
+	protected override async Task OnInitializedAsync()
+	{
+		_artifacts = await DataDBContext.DataArtifacts
+			.Select(a => new DataArtifactViewModel
+				{
+					Id = a.ID,
+					Name = a.Name,
+					ImageURL = a.ImageURL,
+					VideoURL = a.VideoURL,
+					DataArtifactTypeID = a.DataArtifactTypeID,
+					TranslatedText = a.TranslatedText
+
+				})
+				.ToListAsync();
+	}
 }

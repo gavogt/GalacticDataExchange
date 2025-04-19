@@ -14,6 +14,6 @@ namespace GalacticDataExchange.Shared
         public string? ImageURL { get; init; }
         public string? VideoURL { get; init; }
         public string TranslatedText { get; init; } = string.Empty;
-        public int LikeCount { get; set; }
+        public int LikeCount { get; init; }
     }
 }
