@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GalacticDataExchange.Shared.Migrations
 {
     [DbContext(typeof(DataDBContext))]
-    [Migration("20250408210738_UserSignUp3")]
-    partial class UserSignUp3
+    [Migration("20250419081209_DataArtifactLike")]
+    partial class DataArtifactLike
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,31 @@ namespace GalacticDataExchange.Shared.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("DataArtifacts");
+                });
+
+            modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifactLike", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DataArtifactID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID");
+
+                    b.HasIndex("DataArtifactID", "UserID")
+                        .IsUnique();
+
+                    b.ToTable("DataArtifactLikes");
                 });
 
             modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifactType", b =>
@@ -257,6 +282,25 @@ namespace GalacticDataExchange.Shared.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifactLike", b =>
+                {
+                    b.HasOne("GalacticDataExchange.Shared.DataArtifact", "DataArtifact")
+                        .WithMany("Likes")
+                        .HasForeignKey("DataArtifactID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GalacticDataExchange.Shared.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DataArtifact");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GalacticDataExchange.Shared.SensorReading", b =>
                 {
                     b.HasOne("GalacticDataExchange.Shared.Sensor", "Sensor")
@@ -266,6 +310,11 @@ namespace GalacticDataExchange.Shared.Migrations
                         .IsRequired();
 
                     b.Navigation("Sensor");
+                });
+
+            modelBuilder.Entity("GalacticDataExchange.Shared.DataArtifact", b =>
+                {
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("GalacticDataExchange.Shared.Sensor", b =>

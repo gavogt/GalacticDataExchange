@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GalacticDataExchange.Shared.Migrations
 {
     /// <inheritdoc />
-    public partial class UserSignUp3 : Migration
+    public partial class DataArtifactLike : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -111,6 +111,32 @@ namespace GalacticDataExchange.Shared.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DataArtifactLikes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataArtifactID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DataArtifactLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DataArtifactLikes_DataArtifacts_DataArtifactID",
+                        column: x => x.DataArtifactID,
+                        principalTable: "DataArtifacts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DataArtifactLikes_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "DataArtifactTypes",
                 columns: new[] { "ID", "Description", "Name" },
@@ -135,6 +161,17 @@ namespace GalacticDataExchange.Shared.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_DataArtifactLikes_DataArtifactID_UserID",
+                table: "DataArtifactLikes",
+                columns: new[] { "DataArtifactID", "UserID" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DataArtifactLikes_UserID",
+                table: "DataArtifactLikes",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DataArtifacts_DataArtifactTypeID",
                 table: "DataArtifacts",
                 column: "DataArtifactTypeID");
@@ -154,19 +191,22 @@ namespace GalacticDataExchange.Shared.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DataArtifacts");
+                name: "DataArtifactLikes");
 
             migrationBuilder.DropTable(
                 name: "SensorReadings");
+
+            migrationBuilder.DropTable(
+                name: "DataArtifacts");
+
+            migrationBuilder.DropTable(
+                name: "Sensors");
 
             migrationBuilder.DropTable(
                 name: "DataArtifactTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Sensors");
         }
     }
 }

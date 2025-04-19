@@ -31,6 +31,8 @@ namespace GalacticDataExchange.Shared
         // Ef Navigation Properties
         public DataArtifactType? DataArtifactType { get; set; }
         public User? User { get; set; }
+        public ICollection<DataArtifactLike>? Likes { get; set; } = new List<DataArtifactLike>();
+
 
         // Ctor
         public DataArtifact()

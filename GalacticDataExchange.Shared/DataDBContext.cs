@@ -15,6 +15,7 @@ namespace GalacticDataExchange.Shared
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<SensorReading> SensorReadings { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<DataArtifactLike> DataArtifactLikes { get; set; }
 
         public DataDBContext(DbContextOptions<DataDBContext> options) : base(options)
         {
@@ -50,6 +51,25 @@ namespace GalacticDataExchange.Shared
             modelBuilder.Entity<DataArtifactType>()
                 .Property(dat => dat.ID)
                 .ValueGeneratedOnAdd();
+
+            // DataArtifactLike has a unique index to prevent duplicate likes
+            modelBuilder.Entity<DataArtifactLike>()
+                .HasIndex(dal => new { dal.DataArtifactID, dal.UserID })
+                .IsUnique();
+
+            // FK to DataArtifact
+            modelBuilder.Entity<DataArtifactLike>()
+                .HasOne(dal => dal.DataArtifact)
+                .WithMany(a => a.Likes)
+                .HasForeignKey(dal => dal.DataArtifactID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // FK to User
+            modelBuilder.Entity<DataArtifactLike>()
+                .HasOne(dal => dal.User)
+                .WithMany()
+                .HasForeignKey(dal => dal.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Seed Data for Sensor
             modelBuilder.Entity<Sensor>().HasData(
