@@ -1,5 +1,21 @@
-﻿<h3>Artifact</h3>
+﻿@page "/artifact/{Id:guid}"
 
-@code {
+@using GalacticDataExchange.Shared
+@using Microsoft.EntityFrameworkCore;
 
+@inject DataDBContext DataDBContext	
+@inject NavigationManager NavigationManager
+
+@code{
+	[Parameter] public Guid Id { get; set; }
+	private DataArtifact? _artifact;
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		_artifact = await DataDBContext.DataArtifacts
+			.Include(a => a.Likes)
+			.FirstOrDefaultAsync(a => a.ID == Id);
+
+	}
 }
