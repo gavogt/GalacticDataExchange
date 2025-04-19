@@ -33,8 +33,9 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-
+		// Fetch Artifacts
 		_artifacts = await DataDBContext.DataArtifacts
+			// Eagerly loaded
 			.Include(a => a.DataArtifactType)
 			.Include(a => a.Likes)
 			.Select(a => new DataArtifactViewModel
@@ -46,9 +47,10 @@ else
 					VideoURL = a.VideoURL,
 					DataArtifactTypeID = a.DataArtifactTypeID,
 					TranslatedText = a.TranslatedText,
+					// Null safe count
 					LikeCount = (a.Likes != null ? a.Likes.Count : 0)
 
 				})
-				.ToListAsync();
+				.ToListAsync(); // Return list
 	}
 }
