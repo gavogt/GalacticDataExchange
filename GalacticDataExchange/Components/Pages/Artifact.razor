@@ -13,8 +13,26 @@
 }
 else
 {
-	<h2>@_artifact.Name</h2>
-	<p class="text-muted">@_artifact.DataArtifactType</p>
+	<button class="btn btn-link mb-3" @onclick='() => NavigationManager.NavigateTo("/artifact-gallery")'>
+		Back to Gallery
+	</button>
+
+	<h2 class="text-white">@_artifact.Name</h2>
+	<p class="text-white">@_artifact.DataArtifactType</p>
+
+	@if (!string.IsNullOrWhiteSpace(_artifact.ImageURL))
+	{
+		<img src="@_artifact.ImageURL" class="img-fluid mb-3 rounded mb-3" style="max-height:300px;object-fit:cover" alt="@_artifact.Name" />
+	}
+	else if (!string.IsNullOrWhiteSpace(_artifact.VideoURL))
+	{
+		<video src="@_artifact.VideoURL"
+			   class="img-fluid mb-3 rounded mb-3"
+			   style="max-height:300px;object-fit:cover"
+			   controls>
+			Your browser does not support the video tag.
+		</video>
+	}
 
 	<button class="btn btn-outline-primary" @onclick="Like">
 		♥ @_artifact.Likes?.Count
@@ -40,6 +58,17 @@ else
 
 		var user = SessionState?.CurrentUser;
 		if (user?.Id == null) return;
+
+		var exists = await DataDBContext.DataArtifactLikes
+			.FirstOrDefaultAsync(Dal =>
+				Dal.DataArtifactID == _artifact.ID &&
+				Dal.UserID == user.Id);
+
+		if (exists != null)
+		{
+			// User has already liked this artifact, do nothing
+			return;
+		}
 
 		// Create a new Like record
 		var like = new DataArtifactLike
