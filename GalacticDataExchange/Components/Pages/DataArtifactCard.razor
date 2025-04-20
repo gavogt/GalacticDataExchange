@@ -1,20 +1,18 @@
-﻿@page "/data-artifact-card"
-
-@using GalacticDataExchange.Shared;
+﻿@using GalacticDataExchange.Shared;
 
 @inject NavigationManager NavigationManager
 
 <div class="container my-5">
-	<div class="card shadow-sm m-2" style="cursor:pointer" @onclick="@(() => NavigationManager.NavigateTo($"/artifact/{DataArtifact.Id}"))">
+	<div class="card shadow-sm m-2" style="cursor:pointer" @onclick="@(() => NavigationManager.NavigateTo($"/artifact/{Artifact.Id}"))">
 
-		@if (!string.IsNullOrWhiteSpace(DataArtifact.ImageURL))
+		@if (!string.IsNullOrWhiteSpace(Artifact.ImageURL))
 		{
-				<img src="@DataArtifact.ImageURL" class="card-img-top" style="height: 140px; object-fit:cover;" alt="Data Artifact Image" />
+				<img src="@Artifact.ImageURL" class="card-img-top" style="height: 140px; object-fit:cover;" alt="Data Artifact Image" />
 		}
-		else if (!string.IsNullOrWhiteSpace(DataArtifact.VideoURL))
+		else if (!string.IsNullOrWhiteSpace(Artifact.VideoURL))
 		{
 				<video class="card-img-top" style="height:  140px; object-fit: cover;" muted autoplay loop playsinline">
-					<source src="@DataArtifact.VideoURL" type="video/mp4" />
+					<source src="@Artifact.VideoURL" type="video/mp4" />
 					Your browser does not support the video tag.
 				</video>
 		}
@@ -24,9 +22,9 @@
 		}
 
 		<div class="card-body">
-			<h5 class="card-title">@DataArtifact.Name</h5>
-			<p class="card-text text-muted">@DataArtifact.DataArtifactTypeID</p>
-			<p class="card-text text-muted">@DataArtifact.TranslatedText</p>
+			<h5 class="card-title">@Artifact.Name</h5>
+			<p class="card-text text-muted">@Artifact.DataArtifactTypeID</p>
+			<p class="card-text text-muted">@Artifact.TranslatedText</p>
 			<span class="badge bg-light text-dark">♥</span>
 		</div>
 	</div>
@@ -34,5 +32,5 @@
 
 @code {
 
-	[Parameter] public DataArtifactViewModel DataArtifact { get; set; } = default!;
+	[Parameter] public DataArtifactViewModel Artifact { get; set; } = default!;
 }
