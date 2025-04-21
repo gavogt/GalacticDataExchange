@@ -7,9 +7,16 @@
 @inject NavigationManager NavigationManager
 @inject SessionState SessionState
 
-@if (_artifact == null)
+@if(_isLoading)
 {
-	<p class="m-4 text-danger">Artifact not found</p>
+	<p class="text-white">Loading Artifact...</p>
+}
+else if (_artifact == null)
+{
+	<p class="text-white">Artifact not found.</p>
+	<button class="btn btn-link mb-3" @onclick='() => NavigationManager.NavigateTo("/artifact-gallery")'>
+		Back to Gallery
+	</button>
 }
 else
 {
@@ -42,6 +49,7 @@ else
 @code {
 	[Parameter] public Guid Id { get; set; }
 	private DataArtifact? _artifact;
+	private bool _isLoading = true;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -50,6 +58,7 @@ else
 			.Include(a => a.Likes) // Eager load likes collection
 			.FirstOrDefaultAsync(a => a.ID == Id); // filter by route parameter
 
+			_isLoading = false;
 	}
 
 	public async Task Like()
