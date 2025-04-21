@@ -6,23 +6,23 @@
 @inject DataDBContext DataDBContext
 
 
-@if (_artifacts == null)
+@if (_isLoading)
 {
-	<p><em>Loading...</em></p>
+	<p class="text-white"><em>Loading...</em></p>
 }
-else if (!_artifacts.Any())
+else if (!_artifacts!.Any())
 {
-	<p>No artifacts found.</p>
+	<p class="text-white">No artifacts found.</p>
 }
 else
 {
 	<div class="row row-cols-1 row-cols-md-3 g-3">
-		@foreach (var art in _artifacts)
-		{
-			<div class="col">
-				<DataArtifactCard Artifact="art" />
-			</div>
-		}
+	@foreach (var art in _artifacts)
+	{
+				<div class="col">
+					<DataArtifactCard Artifact="art" />
+				</div>
+	}
 	</div>
 }
 
@@ -30,6 +30,7 @@ else
 
 @code {
 	private List<DataArtifactViewModel>? _artifacts;
+	private bool _isLoading = true;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -47,10 +48,12 @@ else
 					VideoURL = a.VideoURL,
 					DataArtifactTypeID = a.DataArtifactTypeID,
 					TranslatedText = a.TranslatedText,
-					// Null safe count
+				// Null safe count
 					LikeCount = (a.Likes != null ? a.Likes.Count : 0)
 
 				})
 				.ToListAsync(); // Return list
+
+		_isLoading = false;
 	}
 }
