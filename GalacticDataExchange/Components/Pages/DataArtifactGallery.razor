@@ -8,7 +8,11 @@
 
 @if (_isLoading)
 {
-	<p class="text-white"><em>Loading...</em></p>
+	<div class="container">
+		<div row class="justify-content-center">
+			<p class="text-white"><em>Loading...</em></p>
+		</div>
+	</div>
 }
 else if (!_artifacts!.Any())
 {
@@ -16,20 +20,21 @@ else if (!_artifacts!.Any())
 }
 else
 {
+
 	<div class="row row-cols-1 row-cols-md-3 g-3">
-	@foreach (var art in _artifacts)
-	{
-				<div class="col">
-					<DataArtifactCard Artifact="art" />
-				</div>
-	}
+		@foreach (var art in _artifacts)
+		{
+			<div class="col">
+				<DataArtifactCard Artifact="art" />
+			</div>
+		}
 	</div>
 }
 
 
 
 @code {
-	private List<DataArtifactViewModel>? _artifacts;
+	private List<DataArtifactViewModel> _artifacts = new();
 	private bool _isLoading = true;
 
 	protected override async Task OnInitializedAsync()
